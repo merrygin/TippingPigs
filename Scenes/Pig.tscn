@@ -90,15 +90,14 @@ func update_state():
 				state = WANDER
 				update_target_position()
 				print(\"Nothing to eat here, will wander.\")
-
-	# do I have to say something about wander too?! its only used for moving,
-	# so Id like to have it in the physics function (or do I?)
-	
 	
 # find a new RAndOM! target to move to
+# EITHER make pig reconsider if target pos is unreachable
+# OR Make it reconsider if it takes too long
 func update_target_position():
-	var target_vector = Vector2(randi_range(-200, 200), randi_range(-200, 200))
+	var target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
 	target_position = start_position + target_vector
+	
 		
 func is_at_target_position(): 
 	# Stop moving when at target +/- tolerance -> not super precise targetting
