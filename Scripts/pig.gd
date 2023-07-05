@@ -22,14 +22,11 @@ var state = IDLE
 @onready var start_position = global_position
 @onready var target_position = global_position
 @onready var island_map : TileMap = $"../../IslandMap"
-
+@onready var world : Node2D = $"../.."
 
 
 func _process(delta):
-	if hunger < 10:
-		hunger += 1
-	else:
-		hunger == 10
+	hunger == 10
 	
 	update_state()
 
@@ -57,37 +54,38 @@ func update_state():
 			# if IDLE and getting hungry, change state to hungry
 			if hunger > 5:
 				state = HUNGRY
-				print("Pig got hungry.")
+				print("Pig got hungry: {0}.".format([self.hunger]))
 		HUNGRY:
 			get_node("AnimatedSprite2D").play("Idle")
-			# check if enough underbrush
-			var current_tile_data = get_local_map_tile_data(self.position)
-			if current_tile_data != null:
-				var available_underbrush = current_tile_data.get_custom_data("Underbrush")
-				print("At this tile, {0} underbrush is left".format([available_underbrush]))
-				if available_underbrush >= 10:
-					# this is eating action -> should be own function, probably
-					var new_underbrush = available_underbrush - 5
-					print("Pig ate here and now there is {0} underbrush left.".format([new_underbrush]))
-					
-					# how to change local value?! this seems to change global tile value
-					current_tile_data.set_custom_data("Underbrush", new_underbrush)
-					
-					if new_underbrush < 10:
-						# here comes the tile conversion algo
-						# should also be its own func
-						var tile_coord = get_local_map_position(self.position)
-						var current_tile_type = current_tile_data.get_custom_data("Type")
-						island_map.set_cell(0, tile_coord, 3, Vector2i(0, 0))
-						print("The {0} degraded here!")
-					
-					state = IDLE
-				else:
-					state = WANDER
-					update_target_position()
-					print("Nothing to eat here, will wander.")
+			# pull underbrush stats from current tile out of games data layer
+			var tile_coords = get_local_map_position(self.position)
+			print("Pig now at {0}".format([tile_coords]))
+			var available_underbrush = Game.data_layer[tile_coords]["underbrush"]
+			print("At this tile, {0} underbrush is left".format([available_underbrush]))
+			
+			# check if enough underbrush for eating
+			if available_underbrush >= 10:
+				# this is eating action -> should be own function, probably
+				var new_underbrush = available_underbrush - 5
+				# go to data layer and change data
+				Game.data_layer[tile_coords]["underbrush"] = new_underbrush
+				print("Pig ate here and now there is {0} underbrush left.".format([Game.data_layer[tile_coords]["underbrush"]]))
+				
+				if new_underbrush < 10:
+					# here comes the tile conversion algo
+					# should also be its own func probably handled in another script
+					Game.data_layer[tile_coords]["type"] = "forest"
+					Game.data_layer[tile_coords]["atlas_coord"] = Vector2i(0, 0)
+					Game.data_layer[tile_coords]["forest"] = 0
+					island_map.set_cell(0, tile_coords, 3, Vector2i(0, 0))
+					print("The Forest degraded!")
+			
+				state = IDLE
 			else:
-				print("null")
+				state = WANDER
+				update_target_position()
+				print("Nothing to eat here, will wander.")
+
 	# do I have to say something about wander too?! its only used for moving,
 	# so Id like to have it in the physics function (or do I?)
 	

@@ -3,6 +3,8 @@ extends Node
 var pigs
 var pigHerd
 
+var data_layer = {}
+
 var grass_amount = 0
 var forest_amount = 0
 

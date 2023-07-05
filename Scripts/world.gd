@@ -19,21 +19,21 @@ func establish_data_map():
 	# will have to refactor to look for terrain layer to distinguish
 	# possible other tiles (Map rewrite necessary)
 	var all_tile_list = island_map.get_used_cells_by_id(0)
-	var data_layer = {}
+
 	for pos_vector in all_tile_list:
 		var data = island_map.get_cell_tile_data(0, pos_vector)
 		var data_type = data.get_custom_data("Type")
 		if data_type == "Grassland":
-			if pos_vector not in data_layer:
-				data_layer[pos_vector] = {
+			if pos_vector not in Game.data_layer:
+				Game.data_layer[pos_vector] = {
 					"type": "grass", 
 					"underbrush": 20, 
 					"trees": 0,
 					"atlas_coord": Vector2i(0, 0)# store this here for easy access to tile art
 					}
 		elif data_type == "Forest":
-			if pos_vector not in data_layer:
-				data_layer[pos_vector] = {
+			if pos_vector not in Game.data_layer:
+				Game.data_layer[pos_vector] = {
 					"type": "forest", 
 					"underbrush": 100, 
 					"trees": 100,

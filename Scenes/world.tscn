@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=11 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Environment.gd" id="2_xy2v2"]
@@ -237,9 +237,6 @@ custom_data_layer_3/name = "Type"
 custom_data_layer_3/type = 4
 sources/3 = SubResource("TileSetAtlasSource_ei1ot")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_173cl"]
-size = Vector2(1147.5, 158.5)
-
 [node name="world" type="Node2D"]
 script = ExtResource("1_e2abj")
 
@@ -320,17 +317,6 @@ z_index = 5
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(521, 376)
 zoom = Vector2(1.103, 1.103)
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-z_index = 5
-position = Vector2(555.75, 77.75)
-shape = SubResource("RectangleShape2D_173cl")
-
-[node name="GridMap" type="GridMap" parent="."]
 
 [connection signal="pressed" from="PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="PigFeast" to="." method="_on_pig_feast_pressed"]
