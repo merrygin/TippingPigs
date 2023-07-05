@@ -23,7 +23,6 @@ enum {
 @export var health = 10
 var state = IDLE
 
-@onready var stats = $Stats
 @onready var start_position = global_position
 @onready var target_position = global_position
 @onready var island_map : TileMap = $\"../../IslandMap\"
@@ -31,25 +30,25 @@ var state = IDLE
 
 
 func _process(delta):
-	hunger = 10
-	print(\"hunger is now: {0}\".format([hunger]))
+	if hunger <= 10:
+		hunger += 1
+	else:
+		hunger = 10
+	#print(\"hunger is now: {0}\".format([hunger]))
 	update_state()
 
 
-# return only local map position
+# return local map position
 func get_local_map_position(pos):
 	var map_position = island_map.local_to_map(pos)
-
 	return map_position 
 
-# return local tile data
+# return local tile data (not really necessary at this point?!)
 func get_local_map_tile_data(pos):
 	var map_position = island_map.local_to_map(pos)
 	var tile_data = island_map.get_cell_tile_data(0, Vector2i(map_position))
 	#var test_data = tile_data.get_custom_data(\"Underbrush\")
 	return tile_data
-	
-	
 
 # Check state, check if hungry -> if hungry and if no food available, change state to roaming
 func update_state():
