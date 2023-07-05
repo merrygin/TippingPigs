@@ -1,7 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2jd5iux3i08h"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_nlieh"]
-[ext_resource type="Script" path="res://Spielen.gd" id="2_884vh"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
+
+[sub_resource type="GDScript" id="GDScript_hj3rh"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_nlieh")
@@ -12,7 +25,7 @@ offset_top = 236.0
 offset_right = 710.0
 offset_bottom = 314.0
 text = "Spielen"
-script = ExtResource("2_884vh")
+script = SubResource("GDScript_hj3rh")
 
 [node name="Beenden" type="Button" parent="."]
 offset_left = 556.0
