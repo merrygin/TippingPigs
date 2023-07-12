@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2jd5iux3i08h"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
+
+[sub_resource type="GDScript" id="GDScript_hj3rh"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_nlieh")
+
+[node name="Spielen" type="Button" parent="."]
+offset_left = 507.0
+offset_top = 236.0
+offset_right = 710.0
+offset_bottom = 314.0
+text = "Spielen"
+script = SubResource("GDScript_hj3rh")
+
+[node name="Beenden" type="Button" parent="."]
+offset_left = 556.0
+offset_top = 355.0
+offset_right = 659.0
+offset_bottom = 392.0
+text = "Verlassen"
+
+[connection signal="pressed" from="Spielen" to="." method="_on_spielen_pressed"]
+[connection signal="pressed" from="Beenden" to="." method="_on_beenden_pressed"]
