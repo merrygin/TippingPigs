@@ -73,17 +73,8 @@ func update_state():
 				var new_underbrush = available_underbrush - 5
 				# go to data layer and change data
 				Game.data_layer[tile_coords][\"underbrush\"] = new_underbrush
-				print(\"Pig ate here and now there is {0} underbrush left.\".format([Game.data_layer[tile_coords][\"underbrush\"]]))
+				#print(\"Pig ate here and now there is {0} underbrush left.\".format([Game.data_layer[tile_coords][\"underbrush\"]]))
 				
-				if new_underbrush < 10:
-					# here comes the tile conversion algo
-					# should also be its own func probably handled in another script
-					Game.data_layer[tile_coords][\"type\"] = \"forest\"
-					Game.data_layer[tile_coords][\"atlas_coord\"] = Vector2i(0, 0)
-					Game.data_layer[tile_coords][\"forest\"] = 0
-					island_map.set_cell(0, tile_coords, 3, Vector2i(0, 0))
-					print(\"The Forest degraded!\")
-			
 				state = IDLE
 			else:
 				state = WANDER
@@ -212,6 +203,7 @@ radius = 32.1403
 
 [node name="Pig" type="CharacterBody2D"]
 z_index = 4
+collision_layer = 4
 script = SubResource("GDScript_4h335")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

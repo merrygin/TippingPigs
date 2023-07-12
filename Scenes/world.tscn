@@ -225,6 +225,7 @@ texture = ExtResource("4_8hnlw")
 
 [sub_resource type="TileSet" id="TileSet_kxc3y"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 4
 physics_layer_1/collision_layer = 2
 physics_layer_1/collision_mask = 2
 custom_data_layer_0/name = "Underbrush"
