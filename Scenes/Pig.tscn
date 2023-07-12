@@ -7,7 +7,7 @@ script/source = "extends CharacterBody2D
 
 const ACCELERATION = 300
 const MAX_SPEED = 50
-const TOLERANCE = 4.0 # this will let the pig float around the target point
+const TOLERANCE = 10 # this will let the pig float around the target point
 
 func _ready():
 	get_node(\"AnimatedSprite2D\").play(\"Idle\")
@@ -22,6 +22,7 @@ enum {
 @export var hunger = 0
 @export var health = 10
 var state = IDLE
+var wander_timer = 0
 
 @onready var start_position = global_position
 @onready var target_position = global_position
@@ -58,14 +59,14 @@ func update_state():
 			# if IDLE and getting hungry, change state to hungry
 			if hunger > 5:
 				state = HUNGRY
-				print(\"Pig got hungry: {0}.\".format([self.hunger]))
+				#print(\"Pig got hungry: {0}.\".format([self.hunger]))
 		HUNGRY:
 			get_node(\"AnimatedSprite2D\").play(\"Idle\")
 			# pull underbrush stats from current tile out of games data layer
 			var tile_coords = get_local_map_position(self.position)
-			print(\"Pig now at {0}\".format([tile_coords]))
+			#print(\"Pig now at {0}\".format([tile_coords]))
 			var available_underbrush = Game.data_layer[tile_coords][\"underbrush\"]
-			print(\"At this tile, {0} underbrush is left\".format([available_underbrush]))
+			#print(\"At this tile, {0} underbrush is left\".format([available_underbrush]))
 			
 			# check if enough underbrush for eating
 			if available_underbrush >= 10:
@@ -79,16 +80,26 @@ func update_state():
 			else:
 				state = WANDER
 				update_target_position()
-				print(\"Nothing to eat here, will wander.\")
-	
+				#print(\"Nothing to eat here, will wander.\")
+				
+			
+		
 # find a new RAndOM! target to move to
 # EITHER make pig reconsider if target pos is unreachable
 # OR Make it reconsider if it takes too long
 func update_target_position():
 	var target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
-	target_position = start_position + target_vector
-	
-		
+	target_position = self.position + target_vector
+	print(\"Sniff sniff... {0} doesn't smell like sea water. Good tidings.\".format([target_position]))
+	# checking if target vec is legal, recalculating till its fine
+	while get_local_map_position(target_position) not in Game.data_layer:
+		target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
+		target_position = self.position + target_vector
+		print(\"Can't find any acorns in the Pacific. Abort!\")
+		if get_local_map_position(target_position) in Game.data_layer:
+			print(target_position)
+			print(\"{0} smells better. Oink!\".format([target_position]))
+
 func is_at_target_position(): 
 	# Stop moving when at target +/- tolerance -> not super precise targetting
 	return (target_position - global_position).length() < TOLERANCE

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2jd5iux3i08h"]
+[gd_scene load_steps=4 format=3 uid="uid://b2jd5iux3i08h"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
 
@@ -16,23 +16,62 @@ func _process(delta):
 	pass
 "
 
+[sub_resource type="LabelSettings" id="LabelSettings_mqiaa"]
+font_size = 60
+font_color = Color(0.988235, 0.992157, 0, 1)
+outline_size = 9
+outline_color = Color(0, 0.47451, 0.862745, 1)
+shadow_size = 30
+shadow_color = Color(0, 0, 0, 0.815686)
+shadow_offset = Vector2(6, 6)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_nlieh")
 
 [node name="Spielen" type="Button" parent="."]
-offset_left = 507.0
-offset_top = 236.0
-offset_right = 710.0
-offset_bottom = 314.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 504.0
+offset_top = 261.0
+offset_right = 649.0
+offset_bottom = 317.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 text = "Spielen"
 script = SubResource("GDScript_hj3rh")
 
 [node name="Beenden" type="Button" parent="."]
-offset_left = 556.0
-offset_top = 355.0
-offset_right = 659.0
-offset_bottom = 392.0
+offset_left = 528.0
+offset_top = 337.0
+offset_right = 631.0
+offset_bottom = 374.0
 text = "Verlassen"
+
+[node name="Title" type="Label" parent="."]
+offset_left = 400.0
+offset_top = 107.0
+offset_right = 745.0
+offset_bottom = 211.0
+text = "TippingPigs"
+label_settings = SubResource("LabelSettings_mqiaa")
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 182.0
+offset_top = 432.0
+offset_right = 972.0
+offset_bottom = 605.0
+bbcode_enabled = true
+text = "{\\rtf1
+Du bist ein {\\iRahui} auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
+
+Züchte genug Schweine, um deine Dorfbewohner glücklich zu machen - aber nicht zu viele! Sonst kippt die Insel in einen nicht-bewohnbaren Zustand...
+}"
 
 [connection signal="pressed" from="Spielen" to="." method="_on_spielen_pressed"]
 [connection signal="pressed" from="Beenden" to="." method="_on_beenden_pressed"]
