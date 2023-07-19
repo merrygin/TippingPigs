@@ -94,8 +94,9 @@ func update_map():
 	
 	#IF time has come:
 	for entry in Game.data_layer:
-		#print(Vector2i(entry))
-		#print(entry)
+		
+		# check if surrounding tiles change any data
+		check_surr_tiles(entry)
 		
 		# make trees grow according to variables/tile type (modifiers baked in)
 		Game.data_layer[entry].trees = snapped(clamp( # clamp to min max values
@@ -160,3 +161,70 @@ func update_map():
 				Game.data_layer[entry].ub_growth_modifier = - 1
 
 				
+func check_surr_tiles(tile_data):
+	"""This is a check each tile performs in certain interval to see if neighborhood is healthy"""
+	# If not, the tile itself either grows less or actually decreases 
+	# this should lead to some cascading breakdowns of grass/forest, nyahaha
+	# HOWEVER: this should use some of the processes in update_map/be part of it, since
+	# it needs the same info.... but thats getting pretty big. hm.
+	var neighbor_list = []
+	var forest_count = 0
+	var deso_count = 0
+	
+	# get neighbor tile types
+	# Moore neighborhood (more performance cost this way... but also more dynamic)
+	var north_tile = tile_data + Vector2i(0, 1) 
+	if north_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[north_tile].type)
+	
+	# northwest and northeast tiles
+	var nw_tile = north_tile + Vector2i(-1, 0) 
+	if nw_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[nw_tile].type)
+	var ne_tile = north_tile + Vector2i(1, 0) 
+	if ne_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[ne_tile].type)
+	
+	# south tile
+	var south_tile = tile_data + Vector2i(0, -1)
+	if south_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[south_tile].type)
+	
+	# south west and south east tiles
+	var sw_tile = south_tile + Vector2i(-1, 0) 
+	if sw_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[sw_tile].type)
+	var se_tile = south_tile + Vector2i(1, 0) 
+	if se_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[se_tile].type)
+			
+	# west and east tile
+	var west_tile = tile_data + Vector2i(-1, 0)
+	if west_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[west_tile].type)
+	var east_tile = tile_data + Vector2i(1, 0)
+	if east_tile in Game.data_layer:
+		neighbor_list.append(Game.data_layer[east_tile].type)
+	
+	# Count neighbor types
+	for neighbor in neighbor_list:
+		if neighbor == "forest":
+			forest_count += 1
+		elif neighbor == "desolation":
+			deso_count += 1
+	
+	# if 3 or more forest -> growth ++
+	# if 2 forest -> growth =
+	# if less than 2 forest -> growth --
+	# if 3 or more desolation -> growth -----
+	var local_tile = Game.data_layer[tile_data]
+	if forest_count >= 4: # if on 4 or more sides forest -> growth increase
+		local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.5
+	elif forest_count <= 2: 
+		local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.25
+	if deso_count >= 2: # if on 4 or more sides desolation -> trees die
+		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 0.5
+	elif deso_count >= 3: # if on 4 or more sides desolation -> trees die
+		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 1
+	elif deso_count >= 5: # if on 4 or more sides desolation -> trees die
+		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 2
