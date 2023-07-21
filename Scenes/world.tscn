@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=12 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Environment.gd" id="2_xy2v2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://la4epvpo2h61" path="res://assets/Sunny Land Trees Props Pack /overworld_tileset_grass.png" id="4_8hnlw"]
 [ext_resource type="Script" path="res://Scripts/mapping.gd" id="5_l3tv3"]
 [ext_resource type="Texture2D" uid="uid://dtubqurfqjh18" path="res://assets/Sunny-land-assets-files/PNG/environment/layers/back.png" id="6_b68fi"]
+[ext_resource type="PackedScene" uid="uid://cpjfms7o5ghmw" path="res://Scenes/villager.tscn" id="7_ty3jr"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_mv2s2"]
 keycode = 32
@@ -219,9 +220,9 @@ texture = ExtResource("4_8hnlw")
 6:2/0 = 0
 6:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 6:2/0/physics_layer_0/angular_velocity = 0.0
-6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
 6:2/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 6:2/0/physics_layer_1/angular_velocity = 0.0
+6:2/0/custom_data_3 = "Desolation"
 
 [sub_resource type="TileSet" id="TileSet_kxc3y"]
 physics_layer_0/collision_layer = 1
@@ -270,7 +271,7 @@ offset_right = 1150.0
 offset_bottom = 643.0
 scroll_offset = Vector2(-220, -40)
 
-[node name="Label" type="Label" parent="."]
+[node name="EnvironmentLabel" type="Label" parent="."]
 modulate = Color(0.192157, 0.192157, 0.192157, 1)
 z_index = 9
 offset_left = 305.0
@@ -280,7 +281,7 @@ offset_bottom = 114.0
 text = "Environment"
 script = ExtResource("2_xy2v2")
 
-[node name="Label2" type="Label" parent="."]
+[node name="PigherdLabel" type="Label" parent="."]
 offset_left = 44.0
 offset_top = 84.0
 offset_right = 172.0
@@ -315,6 +316,12 @@ metadata/_edit_lock_ = true
 
 [node name="Pigs" type="Node2D" parent="."]
 z_index = 5
+
+[node name="Villagers" type="Node2D" parent="."]
+
+[node name="Villager" parent="Villagers" instance=ExtResource("7_ty3jr")]
+z_index = 6
+position = Vector2(451, 328)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(521, 376)

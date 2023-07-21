@@ -1,7 +1,9 @@
 extends Node2D
 
 @onready var pigs_node = $Pigs
+@onready var villagers_node = $Villagers
 @onready var pig = preload("res://Scenes/Pig.tscn")
+@onready var villager = preload("res://Scenes/villager.tscn")
 @onready var island_map = $IslandMap
 
 func _ready():
@@ -21,6 +23,7 @@ func establish_data_map():
 	var all_tile_list = island_map.get_used_cells_by_id(0)
 	
 	# CAN REPLACE THIS WITH GAME tt_TYPE DEFAULTS!
+	# the mapping.gd script could be incorporated here (or vice versa)
 	for pos_vector in all_tile_list:
 		var data = island_map.get_cell_tile_data(0, pos_vector)
 		var data_type = data.get_custom_data("Type")
@@ -54,10 +57,25 @@ func establish_data_map():
 					"ub_growth_modifier": - 1, # ub won't regrow here; - 1 to kill of remaining
 					"atlas_coord": Vector2i(6, 2)
 					}
+	print("Datamap initialized.")
 
+func restart():
+
+	var to_slaugther = get_tree().get_nodes_in_group("pigs_group")
+	for pig in to_slaugther:
+		pig.queue_free()
+	get_tree().reload_current_scene()
+	get_node("IslandMap").request_ready()
+
+	establish_data_map()
+	# hmm this doesn't work as intended
+	
 func _process(delta):
 	update_herdsize()
 	update_map() # this needs to go elsewhere, regrowth is way too fast
+	if Input.is_action_just_pressed("restart_game"):
+		restart()
+
 
 # update the herdsizes etc. to be displayed
 func update_herdsize():
@@ -160,7 +178,6 @@ func update_map():
 				Game.data_layer[entry].tree_growth_modifier = - 1
 				Game.data_layer[entry].ub_growth_modifier = - 1
 
-				
 func check_surr_tiles(tile_data):
 	"""This is a check each tile performs in certain interval to see if neighborhood is healthy"""
 	# If not, the tile itself either grows less or actually decreases 

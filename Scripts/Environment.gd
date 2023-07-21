@@ -8,4 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	text = "Waldflächen: " + str(Game.forest_amount) + "  |   Grassflächen: " + str(Game.grass_amount)
+	text = (
+		"Waldflächen: " + str(Game.forest_amount) + 
+		"  |   Grassflächen: " + str(Game.grass_amount) +
+		"  |   Zerstörtes Land: " + str(Game.deso_amount)
+	)

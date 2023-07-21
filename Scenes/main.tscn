@@ -67,11 +67,11 @@ offset_top = 432.0
 offset_right = 972.0
 offset_bottom = 605.0
 bbcode_enabled = true
-text = "{\\rtf1
-Du bist ein {\\iRahui} auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
+text = "
+Du bist ein [b]Rahui[/b] auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
 
 Züchte genug Schweine, um deine Dorfbewohner glücklich zu machen - aber nicht zu viele! Sonst kippt die Insel in einen nicht-bewohnbaren Zustand...
-}"
+[color=aqua][url=https://godotengine.org]custom URLs[/url][/color] ... die kann man klickbar machen für Verweise usw."
 
 [connection signal="pressed" from="Spielen" to="." method="_on_spielen_pressed"]
 [connection signal="pressed" from="Beenden" to="." method="_on_beenden_pressed"]

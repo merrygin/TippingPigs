@@ -7,6 +7,7 @@ var data_layer = {}
 
 var forest_amount = 0
 var grass_amount = 0
+var deso_amount = 0
 
 var min_underbrush = 0
 var max_underbrush = 100

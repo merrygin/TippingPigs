@@ -37,7 +37,7 @@ func _process(delta):
 		hunger = 10
 	#print(\"hunger is now: {0}\".format([hunger]))
 	update_state()
-	print(wander_timer)
+	#print(wander_timer)
 
 # return local map position
 func get_local_map_position(pos):
@@ -91,7 +91,7 @@ func update_state():
 			# time out for movement if it takes too long; should this be somewhere else?
 			wander_timer += 1
 			if wander_timer >= 500:
-				print(\"This is taking too long...\")
+				#print(\"This is taking too long...\")
 				update_target_position()
 				wander_timer = 0
 		
@@ -101,16 +101,16 @@ func update_state():
 func update_target_position():
 	var target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
 	target_position = self.position + target_vector
-	print(\"Sniff sniff... {0} doesn't smell like sea water. Good tidings.\".format([target_position]))
+	#print(\"Sniff sniff... {0} doesn't smell like sea water. Good tidings.\".format([target_position]))
 	
 	# checking if target vec is legal, recalculating till its fine
 	while get_local_map_position(target_position) not in Game.data_layer:
 		target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
 		target_position = self.position + target_vector
-		print(\"Can't find any acorns in the Pacific. Abort!\")
-		if get_local_map_position(target_position) in Game.data_layer:
-			print(target_position)
-			print(\"{0} smells better. Oink!\".format([target_position]))
+		#print(\"Can't find any acorns in the Pacific. Abort!\")
+		#if get_local_map_position(target_position) in Game.data_layer:
+		#	print(target_position)
+		#	print(\"{0} smells better. Oink!\".format([target_position]))
 	
 
 	
@@ -238,13 +238,15 @@ script = SubResource("GDScript_4h335")
 position = Vector2(-1, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_eqjf0")
+metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(9.53674e-07, 9.53674e-07)
+scale = Vector2(0.6875, 0.6875)
 sprite_frames = SubResource("SpriteFrames_wqbco")
 animation = &"Idle"
 frame_progress = 0.021467
-metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
@@ -253,3 +255,4 @@ collision_mask = 2
 [node name="ForestDetection" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_18n86")
 debug_color = Color(0.384314, 0.6, 0.376471, 0.419608)
+metadata/_edit_lock_ = true
