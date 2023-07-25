@@ -59,7 +59,7 @@ func establish_data_map():
 					}
 	print("Datamap initialized.")
 
-func restart():
+func restart(): # BUGGY!
 
 	var to_slaugther = get_tree().get_nodes_in_group("pigs_group")
 	for pig in to_slaugther:

@@ -14,8 +14,11 @@ enum {
 	EATING
 }
 
-@export var hunger = 0
+@export var lumber = 10
 @export var health = 10
+@export var trees_cut_per_cut = 10 # @export um die Werte schnell verändern zu können
+@export var lumber_per_cut = 5
+@export var lumber_consumption_per_tick = 1
 var state = IDLE
 var wander_timer = 0
 
@@ -26,13 +29,14 @@ var wander_timer = 0
 
 
 func _process(delta):
-	if hunger <= 10:
-		hunger += 1
+	if lumber >= 0:
+		lumber -= lumber_consumption_per_tick
+		
 	else:
-		hunger = 10
-	#print("hunger is now: {0}".format([hunger]))
+		lumber = 0
 	update_state()
-	#print(wander_timer)
+
+
 
 # return local map position
 func get_local_map_position(pos):
@@ -51,27 +55,25 @@ func update_state():
 	match state:
 		IDLE:
 			get_node("AnimatedSprite2D").play("Idle")
-			# if IDLE and getting hungry, change state to hungry
-			if hunger > 5:
-				state = HUNGRY
-				#print("Pig got hungry: {0}.".format([self.hunger]))
+			# if IDLE and lumber is getting low, getting hungry
+			if lumber < 5:
+				state = HUNGRY # hungry for WOOD
+				
 		HUNGRY:
 			get_node("AnimatedSprite2D").play("Idle")
-			# pull underbrush stats from current tile out of games data layer
+			# pull tree stats from current tile out of games data layer; also only cut trees from forest
 			var tile_coords = get_local_map_position(self.position)
-			#print("Pig now at {0}".format([tile_coords]))
-			var available_trees = Game.data_layer[tile_coords]["trees"]
-			#print("At this tile, {0} underbrush is left".format([available_underbrush]))
 			
-			# check if enough underbrush for eating
-			if available_trees >= 10:
-				# this is eating action -> should be own function, probably
-				var new_trees = available_trees - 10
-				# go to data layer and change data
-				Game.data_layer[tile_coords]["trees"] = new_trees
-				#print("Pig ate here and now there is {0} underbrush left.".format([Game.data_layer[tile_coords]["underbrush"]]))
-				
-				#insert timer here!
+
+			if Game.data_layer[tile_coords]["type"] == "forest": 
+				var available_trees = Game.data_layer[tile_coords]["trees"]
+				# check if enough trees for cutting
+				if available_trees >= 20:
+					# this is cutting action -> should be own function, probably
+					var new_trees = available_trees - trees_cut_per_cut
+					Game.data_layer[tile_coords]["trees"] = new_trees # go to data layer and change data
+					lumber += lumber_per_cut # convert to lumber!
+
 			else:
 				state = WANDER
 				wander_timer = 0

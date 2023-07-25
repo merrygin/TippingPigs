@@ -21,6 +21,8 @@ enum {
 
 @export var hunger = 0
 @export var health = 10
+@export var hunger_buildup = 1
+@export var unerbrush_consumption_rate = 50
 var state = IDLE
 var wander_timer = 0
 
@@ -32,12 +34,12 @@ var wander_timer = 0
 
 func _process(delta):
 	if hunger <= 10:
-		hunger += 1
+		hunger += hunger_buildup
 	else:
 		hunger = 10
 	#print(\"hunger is now: {0}\".format([hunger]))
 	update_state()
-	#print(wander_timer)
+	print(hunger)
 
 # return local map position
 func get_local_map_position(pos):
@@ -71,17 +73,20 @@ func update_state():
 			# check if enough underbrush for eating
 			if available_underbrush >= 10:
 				# this is eating action -> should be own function, probably
-				var new_underbrush = available_underbrush - 20
-				# go to data layer and change data
-				Game.data_layer[tile_coords][\"underbrush\"] = new_underbrush
-				#print(\"Pig ate here and now there is {0} underbrush left.\".format([Game.data_layer[tile_coords][\"underbrush\"]]))
+				var new_underbrush = available_underbrush - unerbrush_consumption_rate
+				hunger -= 10
+				if new_underbrush < 0:
+					new_underbrush = 0
+				Game.data_layer[tile_coords][\"underbrush\"] = new_underbrush # go to data layer and change data
+
+				# if new underbrush is low, go wander
 				if new_underbrush <= 10:
 					state = WANDER
 					wander_timer = 0
 					update_target_position()
-				else:
+				else: # if not, just stay idle till hungry again
 					state = IDLE
-			else:
+			else: # if not enough underbrush on this spot, go wander
 				state = WANDER
 				wander_timer = 0
 				update_target_position()
