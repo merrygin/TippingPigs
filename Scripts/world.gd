@@ -32,9 +32,12 @@ func establish_data_map():
 				Game.data_layer[pos_vector] = {
 					"type": "grass", 
 					"underbrush": 100, 
-					"trees": 20,
+					"trees": 30,
 					"tree_growth_modifier": 0.5, # trees regrow slower on grass
+					"ub_tree_growth_factor": Game.ub_tree_growth_factor,
 					"ub_growth_modifier": 0.3, # ub regrow slower on grass
+					"tree_ub_growth_factor": Game.tree_ub_growth_factor,
+					"surround_modifier": Game.surround_modifier,
 					"atlas_coord": Vector2i(0, 0)# store this here for easy access to tile art
 					}
 		elif data_type == "Forest":
@@ -44,7 +47,10 @@ func establish_data_map():
 					"underbrush": 100, 
 					"trees": 100,
 					"tree_growth_modifier": 1.5, # trees grow faster in woods
-					"ub_growth_modifier": 1.3, # ub regrow faster on grass
+					"ub_tree_growth_factor": Game.ub_tree_growth_factor,
+					"ub_growth_modifier": 0.3,
+					"tree_ub_growth_factor": Game.tree_ub_growth_factor,
+					"surround_modifier": Game.surround_modifier,
 					"atlas_coord": Vector2i(10, 5) 
 					}
 		elif data_type == "Desolation":
@@ -53,8 +59,11 @@ func establish_data_map():
 					"type": "desolation", 
 					"underbrush": 0, 
 					"trees": 0,
-					"tree_growth_modifier": 0, # trees won't regrow here; - 1 to kill of remaining
-					"ub_growth_modifier": - 1, # ub won't regrow here; - 1 to kill of remaining
+					"tree_growth_modifier": 0, # trees won't regrow here; lack of underbrush will kill of remaining
+					"ub_tree_growth_factor": Game.ub_tree_growth_factor,
+					"ub_growth_modifier": 1, # ub won't regrow here; lack of trees will kill of remaining
+					"tree_ub_growth_factor": Game.tree_ub_growth_factor,
+					"surround_modifier": Game.surround_modifier,
 					"atlas_coord": Vector2i(6, 2)
 					}
 	print("Datamap initialized.")
@@ -116,32 +125,54 @@ func update_map():
 		# check if surrounding tiles change any data
 		check_surr_tiles(entry)
 		
+		# define 3 thresholds of underbrush that influence tree growth
+		# this could be done more smoothly... 
+		if Game.data_layer[entry].underbrush >= 67:
+			Game.data_layer[entry].ub_tree_growth_factor = 1
+		elif Game.data_layer[entry].underbrush >= 34:
+			Game.data_layer[entry].ub_tree_growth_factor = 0
+		elif Game.data_layer[entry].underbrush <= 33:
+			Game.data_layer[entry].ub_tree_growth_factor = - 2
+			
 		# make trees grow according to variables/tile type (modifiers baked in)
 		Game.data_layer[entry].trees = snapped(clamp( # clamp to min max values
 			(Game.data_layer[entry].trees + (
 				Game.tree_growth * # default tree growth amount
 				Game.data_layer[entry].tree_growth_modifier * # tile type dependant tree growth modifier
-				Game.data_layer[entry].underbrush / 100 - 0.5 # underbrush factor; also ub 80 -> factor 0,3; ub 30 -> factor -0,2; between -0.5 and 0.5
+				Game.data_layer[entry].ub_tree_growth_factor # underbrush factor; also ub 80 -> factor 0,3; ub 30 -> factor -0,2; between -0.5 and 0.5
 				# this is linear, which is suboptimal, but ok i guess?!
 				# Ideally there should be a clever equation that leads to high levels of underbrush leading
 				# to default levels of tree growth and increasingly bad levels of tree growth with low underbrush
 				# Alternative thought: actually, low levels of underbrush are not a problem, it actually
 				# means more space and light for the remaining little trees; so linear might be fine anyway 
-				)
+				) +
+				Game.data_layer[entry].surround_modifier
 			),
 			Game.min_forest, Game.max_forest
 			), 0.01)
-			
+		
+		# define 3 thresholds of tree amount that influences underbrush growth
+		# this could be done more smoothly... 
+		if Game.data_layer[entry].underbrush >= 76: # not as much growth if many trees
+			Game.data_layer[entry].tree_ub_growth_factor = 0
+		elif Game.data_layer[entry].underbrush >= 26: # good growth if some trees
+			Game.data_layer[entry].tree_ub_growth_factor = 1
+		elif Game.data_layer[entry].underbrush <= 25: # sharp decline if not enough trees
+			Game.data_layer[entry].tree_ub_growth_factor = - 3
+		
 		# make underbrush grow according to variables
 		Game.data_layer[entry].underbrush = snapped(clamp(
 			(Game.data_layer[entry].underbrush + (
-				Game.default_underbrush_growth * # default UB growth amount
-				Game.data_layer[entry].ub_growth_modifier # do we need more in depth ub regrowth?!
-				)
+				Game.default_underbrush_growth + # default UB growth amount
+				Game.data_layer[entry].ub_growth_modifier * # do we need more in depth ub regrowth?!
+				Game.data_layer[entry].tree_ub_growth_factor 
+				) +
+				Game.data_layer[entry].surround_modifier
 			),
 			Game.min_underbrush, Game.max_underbrush
 			), 0.01)
-			
+		
+		# the following need to be converted into default values....
 		if Game.data_layer[entry].type == "forest":
 			if Game.data_layer[entry].trees <= 50:
 				"""If not enough trees -> this tile is now grassland"""
@@ -157,8 +188,8 @@ func update_map():
 				island_map.set_cell(0, Vector2i(entry), 3, Vector2i(6, 2))
 				Game.data_layer[entry].type = "desolation"
 				Game.data_layer[entry].atlas_coord = Vector2i(6, 2)
-				Game.data_layer[entry].tree_growth_modifier = - 1
-				Game.data_layer[entry].ub_growth_modifier = - 1
+				Game.data_layer[entry].tree_growth_modifier = 1
+				Game.data_layer[entry].ub_growth_modifier = 1
 		
 		elif Game.data_layer[entry].type == "grass":
 			if Game.data_layer[entry].trees >= 50:
@@ -235,13 +266,13 @@ func check_surr_tiles(tile_data):
 	# if less than 2 forest -> growth --
 	# if 3 or more desolation -> growth -----
 	var local_tile = Game.data_layer[tile_data]
-	if forest_count >= 4: # if on 4 or more sides forest -> growth increase
-		local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.5
-	elif forest_count <= 2: 
-		local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.25
-	if deso_count >= 2: # if on 4 or more sides desolation -> trees die
-		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 0.5
-	elif deso_count >= 3: # if on 4 or more sides desolation -> trees die
-		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 1
-	elif deso_count >= 5: # if on 4 or more sides desolation -> trees die
-		local_tile.tree_growth_modifier = local_tile.tree_growth_modifier - 2
+	#if forest_count >= 4: # if on 4 or more sides forest -> growth increase
+		#local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.5
+	#elif forest_count <= 2: 
+		#local_tile.ub_growth_modifier = local_tile.ub_growth_modifier + 0.25
+	if deso_count >= 1: # if on 2 or more sides desolation -> trees start dying
+		local_tile.surround_modifier = - 1
+	elif deso_count >= 3: # if on 4 or more sides desolation -> trees start dying
+		local_tile.surround_modifier = - 4
+	elif deso_count >= 5: # if on 6 or more sides desolation -> trees start dying
+		local_tile.surround_modifier = - 16

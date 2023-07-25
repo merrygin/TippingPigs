@@ -17,7 +17,10 @@ var max_forest = 100
 var tree_growth = 1
 var default_forest_tree_modifier = 1.5
 var default_grass_tree_modifier = 0.5
-var default_underbrush_growth = 1
+var default_underbrush_growth = 0.1
+var ub_tree_growth_factor = 1
+var tree_ub_growth_factor = 1
+var surround_modifier = 0
 
 func _ready():
 	pigs = get_tree().get_nodes_in_group("Pig")

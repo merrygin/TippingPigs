@@ -16,7 +16,7 @@ enum {
 
 @export var lumber = 10
 @export var health = 10
-@export var trees_cut_per_cut = 10 # @export um die Werte schnell verändern zu können
+@export var trees_cut_per_cut = 50 # @export um die Werte schnell verändern zu können
 @export var lumber_per_cut = 5
 @export var lumber_consumption_per_tick = 1
 var state = IDLE
@@ -27,9 +27,8 @@ var wander_timer = 0
 @onready var island_map : TileMap = $"../../IslandMap"
 @onready var world : Node2D = $"../.."
 
-
 func _process(delta):
-	if lumber >= 0:
+	if lumber > 0:
 		lumber -= lumber_consumption_per_tick
 		
 	else:
@@ -42,7 +41,6 @@ func _process(delta):
 func get_local_map_position(pos):
 	var map_position = island_map.local_to_map(pos)
 	return map_position 
-
 # return local tile data (not really necessary at this point?!)
 func get_local_map_tile_data(pos):
 	var map_position = island_map.local_to_map(pos)
@@ -73,6 +71,8 @@ func update_state():
 					var new_trees = available_trees - trees_cut_per_cut
 					Game.data_layer[tile_coords]["trees"] = new_trees # go to data layer and change data
 					lumber += lumber_per_cut # convert to lumber!
+					if lumber > 10:
+						lumber = 10
 
 			else:
 				state = WANDER
