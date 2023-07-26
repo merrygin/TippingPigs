@@ -7,6 +7,7 @@ var pigHerd
 
 var data_layer = {}
 
+var global_threshold = 0
 var total_amount = 0
 var forest_amount = 0
 var forest_percent = 0.0
@@ -17,10 +18,10 @@ var deso_percent = 0.0
 var average_underbrush = 0 #not used yet
 var average_tree_cover = 0 #not used yet
 
-var min_underbrush = 0
-var max_underbrush = 100
-var min_forest = 0
-var max_forest = 100
+var min_underbrush = 0.0
+var max_underbrush = 100.0
+var min_forest = 0.0
+var max_forest = 100.0
 
 var tree_growth = 1
 var default_forest_tree_modifier = 1.5
