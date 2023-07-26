@@ -1,13 +1,21 @@
 extends Node
 
+var ticks = 0
+
 var pigs
 var pigHerd
 
 var data_layer = {}
 
+var total_amount = 0
 var forest_amount = 0
+var forest_percent = 0.0
 var grass_amount = 0
+var grass_percent = 0.0
 var deso_amount = 0
+var deso_percent = 0.0
+var average_underbrush = 0 #not used yet
+var average_tree_cover = 0 #not used yet
 
 var min_underbrush = 0
 var max_underbrush = 100
@@ -25,6 +33,8 @@ var surround_modifier = 0
 func _ready():
 	pigs = get_tree().get_nodes_in_group("Pig")
 	pigHerd = pigs.size()
+
+
 
 # tile types (tt), default properties; for reference
 var tt_GRASS = {

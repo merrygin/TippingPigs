@@ -31,6 +31,7 @@ animations = [{
 }]
 
 [node name="Villager" type="CharacterBody2D"]
+z_index = 9
 collision_layer = 4
 script = ExtResource("1_lm7hp")
 

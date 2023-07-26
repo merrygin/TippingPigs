@@ -37,6 +37,7 @@ func _process(delta):
 
 
 
+
 # return local map position
 func get_local_map_position(pos):
 	var map_position = island_map.local_to_map(pos)
