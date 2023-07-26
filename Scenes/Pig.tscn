@@ -22,7 +22,7 @@ enum {
 @export var hunger = 0
 @export var health = 10
 @export var hunger_buildup = 1
-@export var underbrush_consumption_rate = 50
+@export var underbrush_consumption_rate = 10
 var state = IDLE
 var wander_timer = 0
 
@@ -66,7 +66,7 @@ func update_state():
 			# pull underbrush stats from current tile out of games data layer
 			var tile_coords = get_local_map_position(self.position)
 			#print(\"Pig now at {0}\".format([tile_coords]))
-			var available_underbrush = Game.data_layer[tile_coords][\"underbrush\"]
+			var available_underbrush = Game.data_layer[tile_coords].underbrush
 			#print(\"At this tile, {0} underbrush is left\".format([available_underbrush]))
 			
 			# check if enough underbrush for eating
@@ -78,8 +78,8 @@ func update_state():
 					hunger = 0
 				if new_underbrush < 0:
 					new_underbrush = 0
-				Game.data_layer[tile_coords][\"underbrush\"] = new_underbrush # go to data layer and change data
-
+				Game.data_layer[tile_coords].underbrush = new_underbrush # go to data layer and change data
+				#print(Game.data_layer[tile_coords].underbrush)
 
 					
 			state = WANDER
@@ -108,10 +108,12 @@ func update_target_position():
 		target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
 		target_position = self.position + target_vector
 		#print(\"Can't find any acorns in the Pacific. Abort!\")
-		#if get_local_map_position(target_position) in Game.data_layer:
-		#	print(target_position)
-		#	print(\"{0} smells better. Oink!\".format([target_position]))
-	
+		
+	var target_tile = get_local_map_position(target_position)
+	if Game.data_layer[target_tile].type == \"desolation\":
+		pass
+		
+
 
 	
 func is_at_target_position(): 
@@ -233,6 +235,7 @@ radius = 32.1403
 z_index = 4
 collision_layer = 4
 script = SubResource("GDScript_4h335")
+underbrush_consumption_rate = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
