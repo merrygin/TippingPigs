@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8wucug32y2vc"]
+
+[ext_resource type="Script" path="res://addons/graph_2d/graph_2d.gd" id="1_bbnja"]
+
+[node name="graphs" type="Control"]
+z_index = 9
+layout_mode = 3
+anchors_preset = 0
+offset_top = -1.0
+offset_right = 415.0
+offset_bottom = 317.0
+
+[node name="trackTiles" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 425.0
+offset_bottom = 323.0
+script = ExtResource("1_bbnja")
+x_max = 3000.0
+y_max = 1000.0
+background_color = Color(0.187176, 0.187176, 0.187176, 1)
