@@ -20,7 +20,7 @@ enum {
 }
 
 @export var hunger = 0
-@export var health = 10
+@export var health = 100
 @export var hunger_buildup = 1
 @export var underbrush_consumption_rate = 10
 var state = IDLE
@@ -33,10 +33,16 @@ var wander_timer = 0
 
 
 func _process(delta):
-	if hunger <= 10:
+	if hunger <= 100:
 		hunger += hunger_buildup
 	else:
-		hunger = 10
+		hunger = 100
+		health -= 1
+	
+	if health <= 0:
+		queue_free()
+
+	
 	#print(\"hunger is now: {0}\".format([hunger]))
 	update_state()
 
@@ -58,7 +64,7 @@ func update_state():
 		IDLE:
 			get_node(\"AnimatedSprite2D\").play(\"Idle\")
 			# if IDLE and getting hungry, change state to hungry
-			if hunger > 5:
+			if hunger >= 1:
 				state = HUNGRY
 				#print(\"Pig got hungry: {0}.\".format([self.hunger]))
 		HUNGRY:
@@ -73,7 +79,7 @@ func update_state():
 			if available_underbrush >= 10:
 				# this is eating action -> should be own function, probably
 				var new_underbrush = available_underbrush - underbrush_consumption_rate
-				hunger -= 2
+				hunger = 0
 				if hunger < 0:
 					hunger = 0
 				if new_underbrush < 0:

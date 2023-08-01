@@ -93,7 +93,11 @@ func _process(delta):
 		pause_game()
 		popup_control.get_child(0).fired = true
 		popup_control.get_child(0).show()
-			
+	if Game.grass_amount == 200 and popup_control.get_child(1).fired == false:
+		pause_game()
+		popup_control.get_child(1).fired = true
+		popup_control.get_child(1).show()
+				
 
 	
 func spawn_villager(amount):
@@ -135,7 +139,7 @@ func _input(event):
 	elif event.is_action_pressed("restart_game"):
 		restart() 
 	
-	elif event.is_action_pressed("left_click"):
+	elif event.is_action_pressed("right_click"):
 		
 		for popup in popup_control.get_children():
 			popup.hide()
@@ -149,6 +153,8 @@ func pause_game():
 		print("Game paused")
 	else:
 		print("Game unpaused")
+		for popup in popup_control.get_children():
+			popup.hide()
 		
 # delete all pigs on button press
 func _on_pig_feast_pressed():

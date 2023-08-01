@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2jd5iux3i08h"]
+[gd_scene load_steps=6 format=3 uid="uid://b2jd5iux3i08h"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
+[ext_resource type="Texture2D" uid="uid://d0mj0avd0hhrn" path="res://assets/island_one.jpg" id="2_ggw5r"]
+[ext_resource type="Texture2D" uid="uid://rnuk3yg7lolu" path="res://assets/hog_one.jpg" id="3_pogg2"]
 
 [sub_resource type="GDScript" id="GDScript_hj3rh"]
 script/source = "extends Button
@@ -62,16 +64,29 @@ label_settings = SubResource("LabelSettings_mqiaa")
 horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 182.0
-offset_top = 432.0
-offset_right = 972.0
-offset_bottom = 605.0
+offset_left = 188.0
+offset_top = 376.0
+offset_right = 978.0
+offset_bottom = 549.0
 bbcode_enabled = true
 text = "
 Du bist ein [b]Rahui[/b] auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
 
 Züchte genug Schweine, um deine Dorfbewohner glücklich zu machen - aber nicht zu viele! Sonst kippt die Insel in einen nicht-bewohnbaren Zustand...
 [color=aqua][url=https://godotengine.org]custom URLs[/url][/color] ... die kann man klickbar machen für Verweise usw."
+metadata/_edit_use_anchors_ = true
+
+[node name="IslandOne" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(569, 364)
+scale = Vector2(0.343, 0.343)
+texture = ExtResource("2_ggw5r")
+metadata/_edit_lock_ = true
+
+[node name="HogOne" type="Sprite2D" parent="."]
+position = Vector2(357, 596)
+scale = Vector2(0.026, 0.026)
+texture = ExtResource("3_pogg2")
 
 [connection signal="pressed" from="Spielen" to="." method="_on_spielen_pressed"]
 [connection signal="pressed" from="Beenden" to="." method="_on_beenden_pressed"]

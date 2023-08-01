@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=19 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2i655"]
@@ -41,6 +41,7 @@ texture = ExtResource("4_8hnlw")
 0:0/0/custom_data_2 = 50.0
 0:0/0/custom_data_3 = "Grassland"
 1:5/0 = 0
+1:5/0/modulate = Color(0.98389, 0.972782, 0.98181, 1)
 1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:5/0/physics_layer_0/angular_velocity = 0.0
 1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -253,6 +254,17 @@ custom_data_layer_3/name = "Type"
 custom_data_layer_3/type = 4
 sources/3 = SubResource("TileSetAtlasSource_ei1ot")
 
+[sub_resource type="GDScript" id="GDScript_ud5vm"]
+script/source = "extends Panel
+
+var fired : bool = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+	
+"
+
 [node name="world" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_e2abj")
@@ -360,7 +372,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
-[node name="firstDesoPop" type="Panel" parent="infoPopUps/popupControl"]
+[node name="Popup1" type="Panel" parent="infoPopUps/popupControl"]
 z_index = 9
 layout_mode = 1
 anchors_preset = 15
@@ -375,7 +387,7 @@ grow_vertical = 2
 script = ExtResource("11_alp25")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="infoPopUps/popupControl/firstDesoPop"]
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup1"]
 z_index = 11
 layout_mode = 0
 offset_left = 13.0
@@ -388,6 +400,35 @@ Das bedeutet, Gras und Bäume wachsen dort nicht mehr aus eigener Kraft nach.
 Normalerweise wachsen immer wieder neue Bäume und neues Gras nach. Wenn etwas die Pflanzen zu schnell zerstört, dann ist das Wachstum der Jungpflanzen wömglich nicht ausreichend genug, um mit der Zerstörung mitzuhalten.
 
 Dieser Fall ist bei Dir jetzt eingetreten. Die Schweine und die Dorfbewohner haben "
+autowrap_mode = 2
+
+[node name="Popup2" type="Panel" parent="infoPopUps/popupControl"]
+z_index = 9
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 71.0
+offset_right = 233.0
+offset_bottom = 519.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ud5vm")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup2"]
+z_index = 11
+layout_mode = 0
+offset_left = 13.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 466.0
+text = "Der erste Kippunkt ist erreicht...!
+
+Dein Grasland ist in einen Abwärtsstrudel der Verwüstung geraten! Das heißt, dass Stück für Stück all Dein Grasland veröden wird. Auch alle Schweine und alle Dorfbewohner nicht mehr dort hinzulassen, würde nicht mehr helfen.
+
+Schau einmal genauer auf das Diagramm links. Die Anzahl an Gras scheint bis vor kurzem sehr stabil gewesen zu sein. Aber plötzlich hat sich etwas verändert und die Anzahl an Graslandflächen nimmt rapide ab."
 autowrap_mode = 2
 
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
