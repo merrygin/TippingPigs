@@ -351,15 +351,16 @@ offset_right = 423.0
 offset_bottom = 318.0
 scale = Vector2(0.869, 0.869)
 
-[node name="infoPopUps" type="CanvasLayer" parent="Level"]
+[node name="infoPopUps" type="CanvasLayer" parent="."]
 
-[node name="popupControl" type="Control" parent="Level/infoPopUps"]
+[node name="popupControl" type="Control" parent="infoPopUps"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
-[node name="firstDesoPop" type="Panel" parent="Level/infoPopUps/popupControl"]
+[node name="firstDesoPop" type="Panel" parent="infoPopUps/popupControl"]
 z_index = 9
 layout_mode = 1
 anchors_preset = 15
@@ -372,8 +373,9 @@ offset_bottom = 519.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_alp25")
+metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Level/infoPopUps/popupControl/firstDesoPop"]
+[node name="Label" type="Label" parent="infoPopUps/popupControl/firstDesoPop"]
 z_index = 11
 layout_mode = 0
 offset_left = 13.0

@@ -7,7 +7,7 @@ extends Node2D
 @onready var villager = preload("res://Scenes/villager.tscn")
 @onready var graphs = preload("res://Scenes/graphs.tscn")
 @onready var island_map = $Level/IslandMap
-@onready var popup_control = $Level/infoPopUps/popupControl
+@onready var popup_control = $infoPopUps/popupControl
 
 func _ready():
 	# Here there could be a spawner for Area2d nodes with stats associated to them
@@ -88,16 +88,13 @@ func restart(): # I THINK it works now, yey
 
 
 func _process(delta):
-	if Game.deso_amount == 1:
-		if popup_control.get_child(0).fired == false:
-			pause_game()
-			popup_one()
+	# fire first info panel when first desolation appears
+	if Game.deso_amount == 1 and popup_control.get_child(0).fired == false:
+		pause_game()
+		popup_control.get_child(0).fired = true
+		popup_control.get_child(0).show()
+			
 
-func popup_one():
-	popup_control.get_child(0).show()
-	popup_control.get_child(0).fired == true
-	
-	
 	
 func spawn_villager(amount):
 	for x in range(0, amount):
@@ -137,13 +134,19 @@ func _input(event):
 			
 	elif event.is_action_pressed("restart_game"):
 		restart() 
-
+	
+	elif event.is_action_pressed("left_click"):
+		
+		for popup in popup_control.get_children():
+			popup.hide()
+		pause_game()
+			
 func pause_game():
 	var pause_value = get_tree().paused
 	get_tree().paused = !pause_value
-	print("Pause button pressed ")
+	#print("Pause button pressed ")
 	if get_tree().paused == true:
-		print("game paused")
+		print("Game paused")
 	else:
 		print("Game unpaused")
 		
@@ -157,4 +160,3 @@ func hover_tile_info():
 	# here I'd like to build a small little function to display the tile
 	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
 	pass
-
