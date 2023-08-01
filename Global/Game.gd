@@ -1,5 +1,7 @@
 extends Node
 
+
+
 var ticks = 0
 
 var pigs
@@ -35,7 +37,9 @@ func _ready():
 	pigs = get_tree().get_nodes_in_group("Pig")
 	pigHerd = pigs.size()
 
-
+func _process(delta):
+	pass
+ 
 
 # tile types (tt), default properties; for reference
 var tt_GRASS = {
