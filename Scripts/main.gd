@@ -6,3 +6,4 @@ func _on_spielen_pressed():
 
 func _on_beenden_pressed():
 	get_tree().quit()
+

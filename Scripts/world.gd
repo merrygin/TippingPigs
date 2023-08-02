@@ -16,11 +16,13 @@ func _ready():
 	# OR: just make a dictionary in the first place, key them to each used tile
 	# to ensure access... yo, true, don't need any new layer for that.
 	# Only setup of "Data Layer" here....
-	Game.data_layer.clear()
+	Game.data_layer.clear() # to make sure no leftover data after restart
 	establish_data_map()
-	# these are all keys for used cells, including sea.
+	
+	# spawn an initial amount of little guys
 	spawn_villager(10)
 	spawn_pigs(10)
+	# fire the tutorial popups and pause game
 	pause_game()
 	popup_control.get_child(2).fired = true
 	popup_control.get_child(2).show()
@@ -129,7 +131,6 @@ func despawn_pigs(amount: int):
 	var all_pigs = get_tree().get_nodes_in_group("pigs_group")
 	for x in range(0, amount):
 		var pig_to_migrate = all_pigs.pop_front()
-		print(pig_to_migrate)
 		pig_to_migrate.queue_free()
 
 	

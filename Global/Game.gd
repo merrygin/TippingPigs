@@ -7,6 +7,9 @@ var ticks = 0
 var pigs
 var pigHerd
 
+var villagers
+var villager_count
+
 var data_layer = {}
 
 var global_threshold = 0
@@ -36,7 +39,9 @@ var surround_modifier = 0
 func _ready():
 	pigs = get_tree().get_nodes_in_group("Pig")
 	pigHerd = pigs.size()
-
+	villagers = get_tree().get_nodes_in_group("villagers_group")
+	villager_count = villagers.size()
+	
 func _process(delta):
 	pass
  

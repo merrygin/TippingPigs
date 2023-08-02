@@ -11,10 +11,7 @@ enum {
 	IDLE,
 	WANDER,
 	HUNGRY,
-	EATING,
-	HAPPY,
-	CONTENT,
-	UNHAPPY
+	EATING
 }
 
 @export var lumber = 10

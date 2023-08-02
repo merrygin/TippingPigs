@@ -333,10 +333,10 @@ text = "Schwein verschiffen
 [node name="EnvironmentLabel" type="Label" parent="Level"]
 modulate = Color(0.192157, 0.192157, 0.192157, 1)
 z_index = 9
-offset_left = 135.0
-offset_top = 85.0
-offset_right = 748.0
-offset_bottom = 116.0
+offset_left = 6.0
+offset_top = 110.0
+offset_right = 619.0
+offset_bottom = 141.0
 text = "Environment"
 script = ExtResource("2_xy2v2")
 
