@@ -11,11 +11,14 @@ enum {
 	IDLE,
 	WANDER,
 	HUNGRY,
-	EATING
+	EATING,
+	HAPPY,
+	CONTENT,
+	UNHAPPY
 }
 
 @export var lumber = 10
-@export var health = 10
+@export var health = 50
 @export var trees_cut_per_cut = 50 # @export um die Werte schnell verändern zu können
 @export var lumber_per_cut = 5
 @export var lumber_consumption_per_tick = 1

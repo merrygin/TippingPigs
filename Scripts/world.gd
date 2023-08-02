@@ -21,6 +21,9 @@ func _ready():
 	# these are all keys for used cells, including sea.
 	spawn_villager(10)
 	spawn_pigs(10)
+	pause_game()
+	popup_control.get_child(2).fired = true
+	popup_control.get_child(2).show()
 	
 	
 func establish_data_map():
@@ -166,3 +169,16 @@ func hover_tile_info():
 	# here I'd like to build a small little function to display the tile
 	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
 	pass
+
+
+func _on_button_pressed():
+	print("click!")
+	popup_control.get_child(2).hide()
+	popup_control.get_child(3).fired = true
+	popup_control.get_child(3).show()
+
+
+func _on_button_start_pressed():
+	print("click-ity!")
+	popup_control.get_child(3).hide()
+	pause_game()
