@@ -124,6 +124,14 @@ func spawn_pigs(amount):
 		# TODO: rewrite this to use signals, so positions become irrelevant
 		pigs_node.add_child(pigTemp)
 		pigTemp.add_to_group("pigs_group")
+
+func despawn_pigs(amount: int):
+	var all_pigs = get_tree().get_nodes_in_group("pigs_group")
+	for x in range(0, amount):
+		var pig_to_migrate = all_pigs.pop_front()
+		print(pig_to_migrate)
+		pig_to_migrate.queue_free()
+
 	
 # spawn one pig on random position
 func _on_pig_spawn_pressed():
@@ -161,9 +169,8 @@ func pause_game():
 		
 # delete all pigs on button press
 func _on_pig_feast_pressed():
-	var to_slaugther = get_tree().get_nodes_in_group("pigs_group")
-	for pig in to_slaugther:
-		pig.queue_free()
+	var to_cull = len(get_tree().get_nodes_in_group("pigs_group"))
+	despawn_pigs(to_cull)
 
 func hover_tile_info():
 	# here I'd like to build a small little function to display the tile
@@ -182,3 +189,7 @@ func _on_button_start_pressed():
 	print("click-ity!")
 	popup_control.get_child(3).hide()
 	pause_game()
+
+
+func _on_pig_kill_some_pressed():
+	despawn_pigs(1)

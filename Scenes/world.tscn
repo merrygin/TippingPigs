@@ -300,10 +300,10 @@ script = ExtResource("2_2i655")
 [node name="PigSpawn" type="Button" parent="Level"]
 z_index = 9
 texture_filter = 1
-offset_left = 155.0
-offset_top = 573.0
-offset_right = 429.0
-offset_bottom = 629.0
+offset_left = 61.0
+offset_top = 576.0
+offset_right = 335.0
+offset_bottom = 632.0
 theme = SubResource("Theme_r2ugb")
 shortcut = SubResource("Shortcut_figl6")
 text = "Schwein züchten (F)"
@@ -311,12 +311,23 @@ text = "Schwein züchten (F)"
 [node name="PigFeast" type="Button" parent="Level"]
 z_index = 144
 texture_filter = 1
-offset_left = 501.0
-offset_top = 573.0
-offset_right = 749.0
-offset_bottom = 631.0
+offset_left = 699.0
+offset_top = 572.0
+offset_right = 947.0
+offset_bottom = 630.0
 theme = SubResource("Theme_gy1xv")
 text = "Alle Schweine verschiffen
+"
+
+[node name="PigKillSome" type="Button" parent="Level"]
+z_index = 144
+texture_filter = 1
+offset_left = 399.0
+offset_top = 572.0
+offset_right = 647.0
+offset_bottom = 630.0
+theme = SubResource("Theme_gy1xv")
+text = "Schwein verschiffen
 "
 
 [node name="EnvironmentLabel" type="Label" parent="Level"]
@@ -534,5 +545,6 @@ text = "Starte!"
 
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="Level/PigFeast" to="." method="_on_pig_feast_pressed"]
+[connection signal="pressed" from="Level/PigKillSome" to="." method="_on_pig_kill_some_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup1/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup2/ButtonStart" to="." method="_on_button_start_pressed"]
