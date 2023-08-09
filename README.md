@@ -4,7 +4,19 @@ This is a project for a virtual toy/game that illustrates the concept of cascadi
 
 It is developed for the Max Planck Society for the History of Science & Max Planck Society for Geoanthropology by members of the [ModelSEN project](https://en.wikipedia.org/wiki/Tipping_points_in_the_climate_system).
 
-[MORE INFO ON THIS PROJECT COMING SOON]
+
+**How to play:**
+On the island, pigs and villagers (currently depicted as fox-folk) are roaming the island. The pigs eat underbrush, the villagers cut trees. Pigs will die if they don't find any underbrush to eat for too long. 
+
+Currently, you can interact with the game by pressing the buttons at the bottom of the screen to spawn or cull pigs or by pressing "F". You can also press "G" to spawn 10 pigs at once. 
+
+There are also Infotext-Popups that come up when something notable happens.
+
+You can pause and unpause the game by pressing "E". This also gets rid of the infotexts.
+
+Keep an eye on the 
+
+[MORE INFO ON THIS PROJECT COMING ... AT SOME POINT]
 
 Current Developers:
 Jascha Schmitz
