@@ -29,14 +29,9 @@ func _ready():
 	
 	
 func establish_data_map():
-	# this creates all key-value dicts for all usable tiles 
-	# will have to refactor to look for terrain layer to distinguish
-	# possible other tiles (Map rewrite necessary)
-	var all_tile_list = island_map.get_used_cells_by_id(0)
-	
-	# CAN REPLACE THIS WITH GAME tt_TYPE DEFAULTS!
+	# CAN REPLACE THIS WITH GAME tt_TYPE DEFAULTS!?
 	# the mapping.gd script could be incorporated here (or vice versa)
-	for pos_vector in all_tile_list:
+	for pos_vector in Game.tile_list:
 		var data = island_map.get_cell_tile_data(0, pos_vector)
 		var data_type = data.get_custom_data("Type")
 		if data_type == "Grassland":

@@ -14,6 +14,7 @@ enum {
 	EATING
 }
 
+@export var unit_range = 2
 @export var lumber = 10
 @export var health = 50
 @export var trees_cut_per_cut = 50 # @export um die Werte schnell verändern zu können
@@ -93,20 +94,27 @@ func update_state():
 # EITHER make pig reconsider if target pos is unreachable
 # OR Make it reconsider if it takes too long
 func update_target_position():
-	var target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
-	target_position = self.position + target_vector
-	#print("Sniff sniff... {0} doesn't smell like sea water. Good tidings.".format([target_position]))
-	
-	# checking if target vec is legal, recalculating till its fine
-	while get_local_map_position(target_position) not in Game.data_layer:
-		target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
-		target_position = self.position + target_vector
-		#print("Can't find any acorns in the Pacific. Abort!")
-		#if get_local_map_position(target_position) in Game.data_layer:
-			#print(target_position)
-			#print("{0} smells better. Oink!".format([target_position]))
-	
+	# new target pos logic (hopefully more sensible and usable for restriction shenanigans)
+	#	var random_legal_tile = Game.legal_tiles[randi() % len(Game.legal_tiles)]
+	#	var random_legal_tile_center = island_map.map_to_local(random_legal_tile)
+	#	bound this by movement range....?
+	#	target_position = random_legal_tile_center
 
+	# this gets a random tile in unit_range; might be performance intensive... range is not strictly
+	# necessary imo
+	var range_list = []
+	# get all tiles that are legal and in range
+	for tile in Game.legal_tiles:
+		if tile[0] in range(tile[0]-unit_range, tile[0]+unit_range) and tile[1] in range(tile[1]-unit_range, tile[1]+unit_range):
+			range_list.append(tile)
+	
+	# get one random tile off of the range list and convert it to local coordinates
+	var random_legal_tile = range_list[randi() % len(range_list)]
+	var random_legal_tile_center = island_map.map_to_local(random_legal_tile)
+	
+	# define this as new target position
+	target_position = random_legal_tile_center
+	range_list.clear()
 	
 func is_at_target_position(): 
 	# Stop moving when at target +/- tolerance -> not super precise targetting

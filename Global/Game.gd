@@ -36,6 +36,12 @@ var ub_tree_growth_factor = 1
 var tree_ub_growth_factor = 1
 var surround_modifier = 0
 
+var tile_list = []
+var legal_tiles = []
+var grass_list = []
+var forest_list = []
+var deso_list = []
+
 func _ready():
 	pigs = get_tree().get_nodes_in_group("Pig")
 	pigHerd = pigs.size()
