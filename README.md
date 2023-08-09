@@ -14,7 +14,7 @@ There are also Infotext-Popups that come up when something notable happens.
 
 You can pause and unpause the game by pressing "E". This also gets rid of the infotexts.
 
-Keep an eye on the 
+Keep an eye on the tile tracker graphs on the right. There you will be able to see en detail if and when a tipping point is crossed. 
 
 [MORE INFO ON THIS PROJECT COMING ... AT SOME POINT]
 
