@@ -97,8 +97,18 @@ func _process(delta):
 		pause_game()
 		popup_control.get_child(1).fired = true
 		popup_control.get_child(1).show()
-				
-
+	if Game.average_tree_cover <= 67.00 and Game.ticks > 1 and popup_control.get_child(4).fired == false:
+		pause_game()
+		popup_control.get_child(4).fired = true
+		popup_control.get_child(4).show()
+	if Game.deso_percent >= 50.00 and Game.ticks > 1 and popup_control.get_child(5).fired == false:
+		pause_game()
+		popup_control.get_child(5).fired = true
+		popup_control.get_child(5).show()
+	if Game.deso_percent == 100 and Game.ticks > 1 and popup_control.get_child(6).fired == false:
+		pause_game()
+		popup_control.get_child(6).fired = true
+		popup_control.get_child(6).show()
 	
 func spawn_villager(amount):
 	for x in range(0, amount):

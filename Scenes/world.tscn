@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=24 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2i655"]
@@ -252,6 +252,39 @@ func _ready():
 	
 "
 
+[sub_resource type="GDScript" id="GDScript_hyo3x"]
+script/source = "extends Panel
+
+var fired : bool = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_fq708"]
+script/source = "extends Panel
+
+var fired : bool = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_gfs0r"]
+script/source = "extends Panel
+
+var fired : bool = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+	
+"
+
 [node name="world" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_e2abj")
@@ -393,20 +426,21 @@ offset_top = 24.0
 offset_right = 275.0
 offset_bottom = 466.0
 text = "Ein erstes Feld ist verwüstet!
-Das bedeutet, Gras und Bäume wachsen dort nicht mehr aus eigener Kraft nach.
+Gras und Bäume wachsen dort nicht mehr aus eigener Kraft nach.
 
-Normalerweise wachsen immer wieder neue Bäume und neues Gras nach. Wenn etwas die Pflanzen zu schnell zerstört, dann ist das Wachstum der Jungpflanzen wömglich nicht ausreichend genug, um mit der Zerstörung mitzuhalten.
+Normalerweise wachsen immer wieder neue Bäume und neues Gras nach. Wenn etwas die Pflanzen zu schnell zerstört, dann ist das Wachstum der Jungpflanzen womöglich nicht ausreichend, um mit der Zerstörung mitzuhalten. 
 
-Dieser Fall ist bei Dir jetzt eingetreten. Die Schweine und die Dorfbewohner haben "
+Achte darauf, dass nicht noch mehr Felder zerstört werden! Wenn zu viel Fläche verwüstet, dann hat das auch gravierende negative Auswirkungen auf die benachbarten gesunden Flächen.
+"
 autowrap_mode = 2
 
 [node name="Popup2" type="Panel" parent="infoPopUps/popupControl"]
 visible = false
 z_index = 9
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 1.825
 offset_left = -1.0
 offset_top = 71.0
 offset_right = 233.0
@@ -427,7 +461,7 @@ text = "Der erste Kippunkt ist erreicht...!
 
 Dein Grasland ist in einen Abwärtsstrudel der Verwüstung geraten! Das heißt, dass Stück für Stück all Dein Grasland veröden wird. Auch alle Schweine und alle Dorfbewohner nicht mehr dort hinzulassen, würde nicht mehr helfen.
 
-Schau einmal genauer auf das Diagramm links. Die Anzahl an Gras scheint bis vor kurzem sehr stabil gewesen zu sein. Aber plötzlich hat sich etwas verändert und die Anzahl an Graslandflächen nimmt rapide ab."
+Schau einmal genauer auf das Diagramm rechts. Die Anzahl an Gras scheint bis vor kurzem sehr stabil gewesen zu sein. Aber plötzlich hat sich etwas verändert und die Anzahl an Graslandflächen nimmt rapide ab. "
 autowrap_mode = 2
 
 [node name="tutorialPopup1" type="Panel" parent="infoPopUps/popupControl"]
@@ -505,6 +539,97 @@ offset_top = 456.0
 offset_right = 275.0
 offset_bottom = 487.0
 text = "Starte!"
+
+[node name="Popup3" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.825
+offset_left = -1.0
+offset_top = 71.0
+offset_right = 233.0
+offset_bottom = 519.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_hyo3x")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup3"]
+z_index = 11
+layout_mode = 0
+offset_left = 13.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 466.0
+text = "Ein Schwellenwert wurde unterschritten. Deiner Inselumwelt geht es nun schlechter... 
+
+Die Waldbedeckung der Insel reicht nicht mehr aus, um eine gute Menge Süßwasser im Boden zu halten. Dadurch wachsen Pflanzen nun langsamer nach.
+
+Die gleiche Fläche reagiert nun also empfindlicher auf Fraß und Bäumefällen. Versuche, den Druck auf die verbleibenden Flächen so gering wie möglich zu halten!"
+autowrap_mode = 2
+
+[node name="Popup4" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.825
+offset_left = -1.0
+offset_top = 71.0
+offset_right = 233.0
+offset_bottom = 519.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_fq708")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup4"]
+z_index = 11
+layout_mode = 0
+offset_left = 13.0
+offset_top = 24.0
+offset_right = 275.0
+offset_bottom = 466.0
+text = "Die Inselumwelt kollabiert!
+
+Die fortschreitende Verwüstung ist nun mit keinen Mitteln mehr aufzuhalten. Sie wird schnell ablaufen, was eine Rettungsaktion schwieriger machen wird.
+
+Denk daran: Nur wenn alle Dorfbewohner die Insel überleben, kann dein Spieldurchlauf zählen!"
+autowrap_mode = 2
+
+[node name="Popup5" type="Panel" parent="infoPopUps/popupControl"]
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.875
+anchor_top = 4.625
+anchor_right = 19.125
+anchor_bottom = 14.35
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_gfs0r")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup5"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -3.0
+offset_right = 2.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "|-|-|- GAME OVER -|-|-|
+(Klicke \"Q\" zum Neustart)"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="Level/PigFeast" to="." method="_on_pig_feast_pressed"]
