@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2jd5iux3i08h"]
+[gd_scene load_steps=7 format=3 uid="uid://b2jd5iux3i08h"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
 [ext_resource type="Texture2D" uid="uid://d0mj0avd0hhrn" path="res://assets/island_one.jpg" id="2_ggw5r"]
 [ext_resource type="Texture2D" uid="uid://rnuk3yg7lolu" path="res://assets/hog_one.jpg" id="3_pogg2"]
+[ext_resource type="Script" path="res://Scripts/Highscore.gd" id="4_na5ei"]
 
 [sub_resource type="GDScript" id="GDScript_hj3rh"]
 script/source = "extends Button
@@ -87,6 +88,16 @@ metadata/_edit_lock_ = true
 position = Vector2(357, 596)
 scale = Vector2(0.026, 0.026)
 texture = ExtResource("3_pogg2")
+
+[node name="Highscore" type="Label" parent="."]
+offset_left = 419.0
+offset_top = 200.0
+offset_right = 745.0
+offset_bottom = 249.0
+text = "Highscore"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_na5ei")
 
 [connection signal="pressed" from="Spielen" to="." method="_on_spielen_pressed"]
 [connection signal="pressed" from="Beenden" to="." method="_on_beenden_pressed"]

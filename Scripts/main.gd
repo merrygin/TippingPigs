@@ -9,3 +9,4 @@ func _on_beenden_pressed():
 
 func _ready():
 	randomize()
+	

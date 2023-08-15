@@ -8,7 +8,6 @@ func _ready():
 	get_node("AnimatedSprite2D").play("Idle")
 
 enum {
-	IDLE,
 	WANDER,
 	HUNGRY,
 	EATING
@@ -16,11 +15,12 @@ enum {
 
 @export var unit_range = 2
 @export var lumber = 10
-@export var health = 50
+@export var health = 100.0
 @export var trees_cut_per_cut = 50 # @export um die Werte schnell verändern zu können
 @export var lumber_per_cut = 5
 @export var lumber_consumption_per_tick = 1
-var state = IDLE
+
+var state = HUNGRY
 var wander_timer = 0
 
 @onready var start_position = global_position
@@ -29,11 +29,19 @@ var wander_timer = 0
 @onready var world : Node2D = $"../.."
 
 func _process(delta):
-	if lumber > 0:
-		lumber -= lumber_consumption_per_tick
+	# this shouldn't be done each tick, thats too much.
+	if Game.wood > 0:
+		Game.wood -= lumber_consumption_per_tick
+		if health < 100:
+			health += 1
 		
 	else:
-		lumber = 0
+		health -= 1
+	
+	if health < 0:
+		queue_free()
+		print("This sucks... I'm outta here.")
+		
 	update_state()
 
 
@@ -53,12 +61,7 @@ func get_local_map_tile_data(pos):
 # Check state, check if hungry -> if hungry and if no food available, change state to roaming
 func update_state():
 	match state:
-		IDLE:
-			get_node("AnimatedSprite2D").play("Idle")
-			# if IDLE and lumber is getting low, getting hungry
-			if lumber < 5:
-				state = HUNGRY # hungry for WOOD
-				
+
 		HUNGRY:
 			get_node("AnimatedSprite2D").play("Idle")
 			# pull tree stats from current tile out of games data layer; also only cut trees from forest
@@ -72,9 +75,9 @@ func update_state():
 					# this is cutting action -> should be own function, probably
 					var new_trees = available_trees - trees_cut_per_cut
 					Game.data_layer[tile_coords]["trees"] = new_trees # go to data layer and change data
-					lumber += lumber_per_cut # convert to lumber!
-					if lumber > 10:
-						lumber = 10
+					
+					
+					Game.wood += lumber_per_cut # convert to woodstock!
 
 			else:
 				state = WANDER
@@ -129,7 +132,7 @@ func _physics_process(delta):
 			if is_at_target_position():
 				decelerate_at_point(target_position, ACCELERATION * delta)
 				#print(position, global_position)
-				state = IDLE
+				state = HUNGRY
 
 			
 			

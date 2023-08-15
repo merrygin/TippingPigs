@@ -36,6 +36,11 @@ var ub_tree_growth_factor = 1
 var tree_ub_growth_factor = 1
 var surround_modifier = 0
 
+var wood : int = 0
+var zufriedenheit : int = 0
+var current_highscore : int = 0
+var alltime_highscore : int = 0
+
 var tile_list = []
 var legal_tiles = []
 var grass_list = []

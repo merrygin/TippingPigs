@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=25 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2i655"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/mapping.gd" id="5_l3tv3"]
 [ext_resource type="Texture2D" uid="uid://dtubqurfqjh18" path="res://assets/Sunny-land-assets-files/PNG/environment/layers/back.png" id="6_b68fi"]
 [ext_resource type="PackedScene" uid="uid://c8wucug32y2vc" path="res://Scenes/graphs.tscn" id="7_gbvn7"]
+[ext_resource type="Script" path="res://Scripts/Score.gd" id="7_unemn"]
 [ext_resource type="Script" path="res://Scripts/pop_first_deso.gd" id="11_alp25"]
 
 [sub_resource type="Theme" id="Theme_r2ugb"]
@@ -313,8 +314,11 @@ offset_top = 572.0
 offset_right = 947.0
 offset_bottom = 630.0
 theme = SubResource("Theme_gy1xv")
-text = "Alle Schweine verschiffen
+text = "Notfall-Festschmaus
 "
+
+[node name="feast_cooldown" type="Timer" parent="Level/PigFeast"]
+wait_time = 10.0
 
 [node name="PigKillSome" type="Button" parent="Level"]
 z_index = 144
@@ -345,6 +349,14 @@ offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Schweineherde: "
 script = ExtResource("3_gclk7")
+
+[node name="Score" type="Label" parent="Level"]
+offset_left = 657.0
+offset_top = 91.0
+offset_right = 1027.0
+offset_bottom = 137.0
+text = "Score"
+script = ExtResource("7_unemn")
 
 [node name="IslandMap" type="TileMap" parent="Level"]
 tile_set = SubResource("TileSet_kxc3y")
@@ -392,6 +404,11 @@ offset_top = -4.0
 offset_right = 423.0
 offset_bottom = 318.0
 scale = Vector2(0.869, 0.869)
+
+[node name="lvl_timer" type="Timer" parent="Level"]
+process_callback = 0
+wait_time = 3.0
+autostart = true
 
 [node name="infoPopUps" type="CanvasLayer" parent="."]
 
@@ -633,6 +650,8 @@ autowrap_mode = 2
 
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="Level/PigFeast" to="." method="_on_pig_feast_pressed"]
+[connection signal="timeout" from="Level/PigFeast/feast_cooldown" to="." method="_on_feast_cooldown_timeout"]
 [connection signal="pressed" from="Level/PigKillSome" to="." method="_on_pig_kill_some_pressed"]
+[connection signal="timeout" from="Level/lvl_timer" to="." method="_on_lvl_timer_timeout"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup1/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup2/ButtonStart" to="." method="_on_button_start_pressed"]

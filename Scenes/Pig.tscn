@@ -162,6 +162,7 @@ func decelerate_at_point(point, acceleration_scalar):
 	velocity -= acceleration_vector
 	velocity = velocity.limit_length(0) # makes pig float slightly at target pos
 
+
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqjf0"]

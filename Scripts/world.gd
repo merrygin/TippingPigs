@@ -21,7 +21,7 @@ func _ready():
 	
 	# spawn an initial amount of little guys
 	spawn_villager(10)
-	spawn_pigs(10)
+	spawn_pigs(2)
 	# fire the tutorial popups and pause game
 	pause_game()
 	popup_control.get_child(2).fired = true
@@ -79,12 +79,21 @@ func restart(): # I THINK it works now, yey
 	for villager in sail_away:
 		villager.queue_free()
 	
+	var popup_counter = popup_control.get_child_count() - 1
+	
+	while popup_counter >= 0:
+		popup_control.get_child(popup_counter).fired = false
+		popup_counter -= 1
 	
 	get_tree().reload_current_scene()
 	Game.global_threshold = 0
 	Game.ticks = 0 # reset ticks
+	Game.zufriedenheit = 0
+	if Game.alltime_highscore < Game.current_highscore:
+		Game.alltime_highscore = Game.current_highscore
+	Game.current_highscore = 0
 	print("Wir besiedeln eine neue Insel!")
-	
+	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
 
 
 func _process(delta):
@@ -173,11 +182,13 @@ func pause_game():
 		for popup in popup_control.get_children():
 			popup.hide()
 		
-# delete all pigs on button press
+# delete half the pigs (with cooldown?)
 func _on_pig_feast_pressed():
-	var to_cull = len(get_tree().get_nodes_in_group("pigs_group"))
+	var to_cull = int(len(get_tree().get_nodes_in_group("pigs_group")) / 2)
 	despawn_pigs(to_cull)
-
+	$Level/PigFeast/feast_cooldown.start()
+	$Level/PigFeast.disabled = true
+	
 func hover_tile_info():
 	# here I'd like to build a small little function to display the tile
 	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
@@ -199,3 +210,24 @@ func _on_button_start_pressed():
 
 func _on_pig_kill_some_pressed():
 	despawn_pigs(1)
+
+
+func _on_lvl_timer_timeout():
+	# count healthy pigs, spawn 1 new pig for each 2 healthy pigs
+	var healthy_pigs = 0
+	for pig in get_tree().get_nodes_in_group("pigs_group"):
+		if pig.health >= 50:
+			healthy_pigs += 1
+	var reproduce_pigs = int(healthy_pigs / 2)
+	spawn_pigs(reproduce_pigs)
+	
+	# adjust the score - replace highscore if higher
+	var tick_score = Game.pigHerd + Game.wood + (Game.forest_percent - 50 ) - Game.deso_amount
+	var new_score = Game.zufriedenheit + tick_score
+	if Game.current_highscore < new_score:
+		Game.current_highscore = new_score
+	Game.zufriedenheit = new_score
+
+
+func _on_feast_cooldown_timeout():
+	$Level/PigFeast.disabled = false
