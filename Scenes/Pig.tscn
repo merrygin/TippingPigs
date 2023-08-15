@@ -19,8 +19,9 @@ enum {
 	EATING
 }
 
+@export var unit_range = 3
 @export var hunger = 0
-@export var health = 10
+@export var health = 100
 @export var hunger_buildup = 1
 @export var underbrush_consumption_rate = 10
 var state = IDLE
@@ -33,10 +34,16 @@ var wander_timer = 0
 
 
 func _process(delta):
-	if hunger <= 10:
+	if hunger <= 100:
 		hunger += hunger_buildup
 	else:
-		hunger = 10
+		hunger = 100
+		health -= 1
+	
+	if health <= 0:
+		queue_free()
+
+	
 	#print(\"hunger is now: {0}\".format([hunger]))
 	update_state()
 
@@ -58,7 +65,7 @@ func update_state():
 		IDLE:
 			get_node(\"AnimatedSprite2D\").play(\"Idle\")
 			# if IDLE and getting hungry, change state to hungry
-			if hunger > 5:
+			if hunger >= 1:
 				state = HUNGRY
 				#print(\"Pig got hungry: {0}.\".format([self.hunger]))
 		HUNGRY:
@@ -73,7 +80,7 @@ func update_state():
 			if available_underbrush >= 10:
 				# this is eating action -> should be own function, probably
 				var new_underbrush = available_underbrush - underbrush_consumption_rate
-				hunger -= 2
+				hunger = 0
 				if hunger < 0:
 					hunger = 0
 				if new_underbrush < 0:
@@ -99,22 +106,26 @@ func update_state():
 # EITHER make pig reconsider if target pos is unreachable
 # OR Make it reconsider if it takes too long
 func update_target_position():
-	var target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
-	target_position = self.position + target_vector
-	#print(\"Sniff sniff... {0} doesn't smell like sea water. Good tidings.\".format([target_position]))
+	# this gets a random tile in unit_range; might be performance intensive... range is not strictly
+	# necessary imo
+	var range_list = []
+	# get tile position of unit
+	var tile_pos = get_local_map_position(self.position)
 	
-	# checking if target vec is legal, recalculating till its fine
-	while get_local_map_position(target_position) not in Game.data_layer:
-		target_vector = Vector2(randi_range(-100, 100), randi_range(-100, 100))
-		target_position = self.position + target_vector
-		#print(\"Can't find any acorns in the Pacific. Abort!\")
-		
-	var target_tile = get_local_map_position(target_position)
-	if Game.data_layer[target_tile].type == \"desolation\":
-		pass
-		
+	# get all tiles that are legal and in range
+	for tile in Game.legal_tiles:
+		if tile[0] in range(tile_pos[0]-unit_range, tile_pos[0]+unit_range+1) and tile[1] in range(tile_pos[1]-unit_range, tile_pos[1]+unit_range+1):
+			range_list.append(tile)
+	
+	# get one random tile off of the range list and convert it to local coordinates
+	var random_legal_tile = range_list[randi() % len(range_list)]
+	var random_legal_tile_center = island_map.map_to_local(random_legal_tile)
+	
+	# define this as new target position
+	target_position = random_legal_tile_center
+	range_list.clear()
 
-
+#	NOTE: This new function produces more believable movement, but less clear cut tipping points
 	
 func is_at_target_position(): 
 	# Stop moving when at target +/- tolerance -> not super precise targetting
