@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=29 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2i655"]
@@ -8,10 +8,13 @@
 [ext_resource type="StyleBox" uid="uid://dbhw3yq0ns6am" path="res://assets/styles/button_pressed.tres" id="3_yylwm"]
 [ext_resource type="Texture2D" uid="uid://la4epvpo2h61" path="res://assets/Sunny Land Trees Props Pack /overworld_tileset_grass.png" id="4_8hnlw"]
 [ext_resource type="Script" path="res://Scripts/mapping.gd" id="5_l3tv3"]
+[ext_resource type="Script" path="res://Scripts/PigFeast.gd" id="5_mphum"]
 [ext_resource type="Texture2D" uid="uid://dtubqurfqjh18" path="res://assets/Sunny-land-assets-files/PNG/environment/layers/back.png" id="6_b68fi"]
 [ext_resource type="PackedScene" uid="uid://c8wucug32y2vc" path="res://Scenes/graphs.tscn" id="7_gbvn7"]
 [ext_resource type="Script" path="res://Scripts/Score.gd" id="7_unemn"]
+[ext_resource type="Script" path="res://Scripts/gameover_timer_ui.gd" id="9_cuxnu"]
 [ext_resource type="Script" path="res://Scripts/pop_first_deso.gd" id="11_alp25"]
+[ext_resource type="Script" path="res://Scripts/gameover_timer.gd" id="13_wngrg"]
 
 [sub_resource type="Theme" id="Theme_r2ugb"]
 Button/styles/hover = ExtResource("2_x8r8g")
@@ -286,6 +289,17 @@ func _ready():
 	
 "
 
+[sub_resource type="GDScript" id="GDScript_pkmop"]
+script/source = "extends Panel
+
+var fired : bool = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+	
+"
+
 [node name="world" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_e2abj")
@@ -314,8 +328,9 @@ offset_top = 572.0
 offset_right = 947.0
 offset_bottom = 630.0
 theme = SubResource("Theme_gy1xv")
-text = "Notfall-Festschmaus
+text = "Notfall-Festschmaus (D)
 "
+script = ExtResource("5_mphum")
 
 [node name="feast_cooldown" type="Timer" parent="Level/PigFeast"]
 wait_time = 10.0
@@ -328,16 +343,16 @@ offset_top = 572.0
 offset_right = 647.0
 offset_bottom = 630.0
 theme = SubResource("Theme_gy1xv")
-text = "Schwein verschiffen
+text = "Schwein verschiffen (S)
 "
 
 [node name="EnvironmentLabel" type="Label" parent="Level"]
-modulate = Color(0.192157, 0.192157, 0.192157, 1)
 z_index = 9
 offset_left = 6.0
 offset_top = 110.0
 offset_right = 619.0
 offset_bottom = 141.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Environment"
 script = ExtResource("2_xy2v2")
 
@@ -351,12 +366,23 @@ text = "Schweineherde: "
 script = ExtResource("3_gclk7")
 
 [node name="Score" type="Label" parent="Level"]
-offset_left = 657.0
-offset_top = 91.0
-offset_right = 1027.0
-offset_bottom = 137.0
+offset_left = 294.0
+offset_top = 85.0
+offset_right = 661.0
+offset_bottom = 111.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Score"
 script = ExtResource("7_unemn")
+
+[node name="gameover_timer_ui" type="Label" parent="Level"]
+z_index = 2
+offset_left = 888.0
+offset_top = 85.0
+offset_right = 1035.0
+offset_bottom = 111.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Game Over in: 2:30"
+script = ExtResource("9_cuxnu")
 
 [node name="IslandMap" type="TileMap" parent="Level"]
 tile_set = SubResource("TileSet_kxc3y")
@@ -409,6 +435,11 @@ scale = Vector2(0.869, 0.869)
 process_callback = 0
 wait_time = 3.0
 autostart = true
+
+[node name="gameover_timer" type="Timer" parent="Level"]
+wait_time = 150.0
+autostart = true
+script = ExtResource("13_wngrg")
 
 [node name="infoPopUps" type="CanvasLayer" parent="."]
 
@@ -504,11 +535,11 @@ offset_left = 13.0
 offset_top = 24.0
 offset_right = 275.0
 offset_bottom = 466.0
-text = "Klick den linken button oder drücke F um ein neues Schwein zu züchten.
+text = "Schweine wachsen von alleine nach - je mehr es gibt, desto mehr werden neu geboren. Klick den linken button oder drücke F, um zusätzlich ein neues Schwein zu züchten. 
 
-Klick G um 10 Schweine auf einmal zu züchten.
+Drücke S oder den mittleren Button, um 1 Schwein auf die Reise zu einer anderen Insel zu schicken.
 
-Drücke \"Alle Schweine verschiffen\" um alle Schweine auf die Reise zu einer anderen Insel zu schicken."
+Drücke D oder den rechten Button, um mit der Hälfte der Schweine einen Festschmaus abzuhalten. Du kannst nur alle 10s ein neues Festmahl veranstalten."
 autowrap_mode = 2
 
 [node name="Button" type="Button" parent="infoPopUps/popupControl/tutorialPopup1"]
@@ -648,10 +679,43 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="Popup6" type="Panel" parent="infoPopUps/popupControl"]
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.875
+anchor_top = 4.625
+anchor_right = 19.2
+anchor_bottom = 7.875
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pkmop")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/Popup6"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -10.0
+offset_right = 2.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "|-|-|- ACHTUNG -|-|-|
+Hälfte des Schweinemaximums erreicht. Denke an den Notfall-Festschmaus!
+(Klicke \"E\" zum Fortfahren)"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="Level/PigFeast" to="." method="_on_pig_feast_pressed"]
 [connection signal="timeout" from="Level/PigFeast/feast_cooldown" to="." method="_on_feast_cooldown_timeout"]
 [connection signal="pressed" from="Level/PigKillSome" to="." method="_on_pig_kill_some_pressed"]
 [connection signal="timeout" from="Level/lvl_timer" to="." method="_on_lvl_timer_timeout"]
+[connection signal="timeout" from="Level/gameover_timer" to="." method="_on_gameover_timer_timeout"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup1/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup2/ButtonStart" to="." method="_on_button_start_pressed"]

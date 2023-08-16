@@ -27,6 +27,7 @@ var min_underbrush = 0.0
 var max_underbrush = 100.0
 var min_forest = 0.0
 var max_forest = 100.0
+@export var max_pigs : int = 300
 
 var tree_growth = 1
 var default_forest_tree_modifier = 1.5
