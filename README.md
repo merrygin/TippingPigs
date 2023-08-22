@@ -2,11 +2,11 @@
 
 This is a project for a virtual toy/game that illustrates the concept of cascading tipping points to young people of ages 12-16 (e.g, tipping points in the climate system, but also complex systems in general).
 
-It is developed for the Max Planck Society for the History of Science & the Max Planck Society for Geoanthropology by members of the [ModelSEN project](https://modelsen.mpiwg-berlin.mpg.de/).
+It is developed for the [Max Planck Institute for the History of Science](https://www.mpiwg-berlin.mpg.de/) & the [Max Planck Institute for Geoanthropology](https://www.shh.mpg.de/en) by members of the [ModelSEN project](https://modelsen.mpiwg-berlin.mpg.de/).
 
----
+- - - 
 NOTE: This is an early version of the game. It is basically functional, but all art and UI elements are placeholders and game mechanics are unbalanced or still in development. 
----
+- - -
 
 ## Overview
 In the game, you take on the role of the head of a historical polynesian village on a pacific island. A crucial livestock which the
@@ -49,7 +49,7 @@ The game can end in a number of ways. If your island survives the countdown, you
 with a gameover if one of the three following scenarios occurs: 
 	
 	I) the island environment collapses (100% desolation tiles),
-	II) the pig herd gets uncontrollably big (>= 300 pigs)
+	II) the pig herd gets uncontrollably big (>= 300 pigs),
 	III) all villagers have fled the island (although this should come after either I or II already happened)
 	
 In those cases, your score does *not* get recorded and your run is regarded as failure! 
@@ -68,9 +68,9 @@ If you manage to beat the game, but your environment is on its way to collapse b
 
 ## Historical and Scientific background
 
----
+- - - 
 NOTE: this is just an incomplete draft / a collection of thoughts. Will be updated with literature and better language at some point.
----
+- - -
 
 The socio-biogeography of pacific islands during the polynesian settlement has been an area of study
 for a number of decades. It is presumed that a relatively homogenous group of people - the historical
@@ -123,8 +123,7 @@ Reasons for choosing this scenario for a tipping points game, summarized:
 	- the historical character might make it less scary to some, assome might be turned away by too acute topics)
 	- humans as visible parts of the dynamics
 	- pigs as likeable intermediaries 
-	- evocative setting of tropical islands that is known in some capacity by many (through classic stories like "Treasure Island", "The mutineers of the Bounty", or new stories such as Disney's "Moana";
-	although this has problems attached, as will be explained later)
+	- evocative setting of tropical islands that is known in some capacity by many (through classic stories like "Treasure Island", "The mutineers of the Bounty", or new stories such as Disney's "Moana"; although this has problems attached, as will be explained later)
 
 ### Some challenges
 
@@ -156,6 +155,7 @@ on them. This is also the point we hope to get accross for the players interacti
 and matter-of-fact depiction as well as the contextualizing info-popups.
 
 Other, more practical challenges include:
+
 	- lack of a team with different expertises:
 		- lack of expertise in game/learning game development (balancing teaching goals with fun; understanding how fun works; experience in gamedev workflows)
 		- lack of didactical expertise
@@ -165,9 +165,9 @@ Other, more practical challenges include:
 
 ## In-depth mechanics
 
----
+- - -
 Explanation of how the environment and agent interactions + dynamcis work, exactly.
----
+- - -
 
 NOTE: All values / thresholds etc. may be subject to change, so the details/values can be outdated.
 
@@ -229,29 +229,29 @@ Former:
 	---
 
 Consulting on Design:
-	The ModelSEN-team (alphabetical):
-		Bernardo S. Buarque
-		Aleksandra Kaye
-		Raphael Schlattmann
-		Malte Vogl (PI)
-		Lea Weis
+	The ModelSEN-team (alphabetically):
+		Bernardo S. Buarque,
+		Aleksandra Kaye,
+		Raphael Schlattmann,
+		Malte Vogl (PI),
+		Lea Weis,
 		Laura von Welczek
 
 Testing:
-	Laura von Welczek
-	Malte Vogl
-	Vogl Junior #1
-	Vogl Junior #2
+	Laura von Welczek,
+	Malte Vogl,
+	Vogl Junior # 1,
+	Vogl Junior # 2 
 	
 	
 
 ## Literature
 
----
+- - -
 Note: This is a preliminary set of sources that aided in the design and historical background of the game. Most of this was the literature of a seminar paper
 I wrote during my bachelor's studies called "Warum starb das polynesische Schwein? Dynami von Ausrottung und Sozialem Wandel in einem eng begrenzten Lebensraum"
----
-
+- - -
+ 
 Allen, Melinda und Craig, Jacqueline, „Dynamics of Polynesian Subsistence. Insights from Archeofauna and Stable Isotope Studies, Aitutaki, Southern Cook Islands“. In: Pacific Science, 63/4, S. 477-506.
 
 Anderson, Atholl (2009), „The rat and the octopus: initial human colonization and the prehistoric introduction of domestic animals to Remote Oceania”. In: Biological Invasions, 11, S.1503-1519.
@@ -266,7 +266,7 @@ Clark, Geoffrey et al. (2013), „Distribution and extirpation of pigs in Pacifi
 
 Clerk, Christian C. (1981), The Animal World of the Mangaians. Unpublished dissertation.
 
-Diamond, Jared (2012), Kollaps. Warum Gesellschaften überleben oder untergehen. Frankfurt a.M.
+Diamond, Jared (2012), Kollaps. Warum Gesellschaften überleben oder untergehen. Frankfurt a.M.
 
 Giovas, Chrstina M. (2006), "No Pig Atoll: Island Biogeography and the Extirpation of a Polynesian Domesticate", In: Asian Perspectives, 45(1), S. 69-95.
 

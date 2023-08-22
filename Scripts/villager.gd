@@ -38,7 +38,8 @@ func _process(delta):
 	else:
 		health -= 1
 	
-	if health < 0:
+	# villagers leave the island if they are annoyed enough
+	if health < 0 and Game.pigHerd <= 0:
 		queue_free()
 		print("This sucks... I'm outta here.")
 		

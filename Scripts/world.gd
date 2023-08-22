@@ -132,15 +132,28 @@ func _process(delta):
 	if Game.pigHerd >= Game.max_pigs and Game.ticks > 1 and popup_control.get_child(6).fired == false:
 		game_over()
 
+	if Game.villager_count <= 0 and Game.ticks > 1:
+		game_over()
+		
 func game_over():
 	pause_game()
 	popup_control.get_child(6).fired = true
 	popup_control.get_child(6).show()
 	gameover = true
 	
+	# check threshold state and deduct points if necessary
+	if Game.threshold_level == "yellow":
+		Game.current_highscore = int(Game.current_highscore * 0.67)
+	elif Game.threshold_level == "red":
+		Game.current_highscore = int(Game.current_highscore * 0.34)
+	elif Game.threshold_level == "black":
+		Game.current_highscore = int(Game.current_highscore * 0.1)
+	
 func spawn_villager(amount):
 	for x in range(0, amount):
 		var villTemp = villager.instantiate()
+		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
+		#rand_pos = island_map.local_to_map(rand_pos)
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		#var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		villTemp.position = rand_xy
@@ -153,6 +166,8 @@ func spawn_villager(amount):
 func spawn_pigs(amount):
 	for x in range(0, amount):
 		var pigTemp = pig.instantiate()
+		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
+		#rand_pos = island_map.local_to_map(rand_pos)
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		pigTemp.position = rand_xy
 		# important to put new pig as child on Pigs 2Dnode to make sure the
