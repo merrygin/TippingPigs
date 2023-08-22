@@ -1,8 +1,8 @@
 # TippingPigs
 
-This is a project for a virtual toy/game that illustrates the concept of cascading tipping points to young people of ages 12-16 (e.g, tipping points in the climate system, but complex systems in general).
+This is a project for a virtual toy/game that illustrates the concept of cascading tipping points to young people of ages 12-16 (e.g, tipping points in the climate system, but also complex systems in general).
 
-It is developed for the Max Planck Society for the History of Science & Max Planck Society for Geoanthropology by members of the ModelSEN project.
+It is developed for the Max Planck Society for the History of Science & the Max Planck Society for Geoanthropology by members of the [ModelSEN project](https://modelsen.mpiwg-berlin.mpg.de/).
 
 NOTE: This is an early version of the game. It is basically functional, but all art and UI elements are placeholders and game mechanics are unbalanced or still in development. 
 
@@ -51,19 +51,22 @@ In both cases, your score does not get recorded and your run is regarded as fail
 If you manage to beat the game, but your environment is on its way to collapse by the time the countdown ended, your score will get a heavy downgrade. 
 
 ### Keybindings
-"E" - pause/unpause and close infotexts
-"Q" - restart the game
-"Esc" - end and close the game
 
-"S" - send away 1 pig
-"D" - prepare half of all pigs for feast
-"F" - spawn 1 pig
-"G" - spawn 10 pigs
+	"E" - pause/unpause and close infotexts
+	"Q" - restart the game
+	"Esc" - end and close the game
+
+	"S" - send away 1 pig
+	"D" - prepare half of all pigs for feast
+	"F" - spawn 1 pig
+	"G" - spawn 10 pigs
 
 ## Historical and Scientific background
+
 ...
-include literature, explanation of why islands etc. ... the current is just a draft with some collected thoughts.
+NOTE: this is just an incomplete draft / a collection of thoughts. Will be updated with literature and better language at some point.
 ...
+
 The socio-biogeography of pacific islands during the polynesian settlement has been an area of study
 for a number of decades. It is presumed that a relatively homogenous group of people - the historical
 polynesians - settled the area of modern day polynesia in a comparatively short period of time (according to 
@@ -218,9 +221,14 @@ capped. Currently, no wood consumption takes place.
 
 
 ## Developers
+
 Current:
-Jascha Schmitz
+	Jascha Schmitz
+
 Former:
----
+	---
+
+Testing:
+	
 
 ## Literature
