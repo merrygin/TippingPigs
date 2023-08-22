@@ -1,4 +1,4 @@
-#TippingPigs
+# TippingPigs
 
 This is a project for a virtual toy/game that illustrates the concept of cascading tipping points to young people of ages 12-16 (e.g, tipping points in the climate system, but complex systems in general).
 
@@ -6,7 +6,7 @@ It is developed for the Max Planck Society for the History of Science & Max Plan
 
 NOTE: This is an early version of the game. It is basically functional, but all art and UI elements are placeholders and game mechanics are unbalanced or still in development. 
 
-##Overview
+## Overview
 In the game, you take on the role of the head of a historical polynesian village on a pacific island. A crucial livestock which the
 villagers are raising are pigs, who roam the island freely, eating the underbrush of the forests and grasslands to survive. The
 villagers are similarly moving around in the forests, chopping trees. 
@@ -17,7 +17,7 @@ hydrology and climate might be crossed, severly hampering the regrowth capabilit
 
 Left unchecked, the increasing numbers of pigs will devestate the environment, rendering the island uninhabitable.
 
-##How to play
+## How to play
 (See below for a list of all keybindings)
 
 The goal of the game is to achieve the highest score, which represents the villagers happiness, without destroying the island in the given timeframe (currently 2:30 minutes). 
@@ -50,7 +50,7 @@ with a gameover if one of the two following scenarios occurs:
 In both cases, your score does not get recorded and your run is regarded as failure. 
 If you manage to beat the game, but your environment is on its way to collapse by the time the countdown ended, your score will get a heavy downgrade. 
 
-###Keybindings
+### Keybindings
 "E" - pause/unpause and close infotexts
 "Q" - restart the game
 "Esc" - end and close the game
@@ -60,7 +60,7 @@ If you manage to beat the game, but your environment is on its way to collapse b
 "F" - spawn 1 pig
 "G" - spawn 10 pigs
 
-##Historical and Scientific background
+## Historical and Scientific background
 ...
 include literature, explanation of why islands etc. ... the current is just a draft with some collected thoughts.
 ...
@@ -116,7 +116,7 @@ Reasons for choosing this scenario for a tipping points game:
 	- pigs as likeable intermediaries 
 	- evocative setting of tropical islands that is known in some capacity by many (through classic stories like "Treasure Island", "The mutineers of the Bounty", or new stories such as Disney's "Moana")
 
-###Some challenges
+### Some challenges
 
 While being a good fit to teach about tipping points in our opinion, this setting carries a number of challenges, for a european team with 
 limited resources especially.
@@ -159,7 +159,7 @@ Other, more practical challenges include:
 
 
 
-##In-depth mechanics
+## In-depth mechanics
 ...
 Explanation of how the environment and agent interactions + dynamcis work, exactly.
 ...
@@ -198,16 +198,16 @@ to a minimum or are even exterminated entirely. After the second, the island is 
 third is mainly there to speed things up once the gameover is on the horizon and the player can't
 really do anything anymore.
 
-###The "agents" - pigs and villagers
+### The "agents" - pigs and villagers
 
-####Pigs
+#### Pigs
 Pigs have "hunger" and "health" values. They eat underbrush off of tiles to decrease hunger. If they 
 don't find enough underbrush and the hunger stays high for too long, they lose health. If they loose
 all their health, they die. 
 Pigs roam around randomly. After they ate underbrush, they move to a different, random tile near them.
 There they eat again.
 
-####Villagers
+#### Villagers
 Villagers have a "health" value as well (representing their mood, more than their healt). Their health is
 impacted by the woods supply they gathered, if it runs too low. If they deplete their health,
 they "die", ie., they leave the island. They regain health if the wood stockpile is high enough.
@@ -217,10 +217,10 @@ capped. Currently, no wood consumption takes place.
 
 
 
-##Developers
+## Developers
 Current:
 Jascha Schmitz
 Former:
 ---
 
-##Literature
+## Literature
