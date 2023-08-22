@@ -163,6 +163,28 @@ Other, more practical challenges include:
 ...
 Explanation of how the environment and agent interactions + dynamcis work, exactly.
 ...
+### The Island Environment
+The island consists of tiles of three types: forest, grassland, and desolation. The type of the tile
+is determined by its properties "underbrush" and most importantly "tree cover". If the tree cover value sinks
+below a threshold, the tile becomes grassland or - if the tree cover is gone completely - desolation.
+Desolation ceases to be useful for villagers and pigs, and also negatively impacts surrounding tiles.
+
+The tree cover regrows depending on: 
+	I) the underbrush value - the higher the value, the better the tree growth;
+	II) surrounding desolation tiles - the more desolation tiles, the worse the tree growth;
+	III) global thresholds of plant growth
+
+In turn, high levels of tree cover lead to higher underbrush growth. Both Tree cover and underbrush level have
+three thresholds that determine the other levels growth. The upper third leads to good growht, the middle
+third leads to stagnation, and the low third leads to sharp decline. This way, an escalating domino effect should
+happen if one or the other value gets to low or - in the case of stagnation - if there
+is outside pressure by pigs and villagers.
+
+The surrounding desolation tiles impact tiles in an escalating way as well, depending on their number.
+If there are 2 or less desolation tiles around, only mild negative effects occur. 3 and higher lead to
+more dramatic effects, while 
+
+
 
 ##Developers
 Current:
