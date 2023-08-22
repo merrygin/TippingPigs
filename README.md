@@ -163,9 +163,12 @@ Other, more practical challenges include:
 ...
 Explanation of how the environment and agent interactions + dynamcis work, exactly.
 ...
+
+NOTE: All values / thresholds etc. may be subject to change, so the details/values can be outdated.
+
 ### The Island Environment
 The island consists of tiles of three types: forest, grassland, and desolation. The type of the tile
-is determined by its properties "underbrush" and most importantly "tree cover". If the tree cover value sinks
+is determined by its properties "underbrush" and most importantly "tree cover", both go from 0 to 100. If the tree cover value sinks
 below a threshold, the tile becomes grassland or - if the tree cover is gone completely - desolation.
 Desolation ceases to be useful for villagers and pigs, and also negatively impacts surrounding tiles.
 
@@ -181,8 +184,36 @@ happen if one or the other value gets to low or - in the case of stagnation - if
 is outside pressure by pigs and villagers.
 
 The surrounding desolation tiles impact tiles in an escalating way as well, depending on their number.
-If there are 2 or less desolation tiles around, only mild negative effects occur. 3 and higher lead to
-more dramatic effects, while 
+If there are no more than 2 desolation tiles around, only mild negative effects occur. 3 and higher lead to
+more noticable effects, while 6 and above almost certainly lead to collapse. This should lead to
+another tipping point and cascading collapse of tiles that are too vulnerable.
+
+The global thresholds for plant growth are passed if the global average tree cover gets below
+certain points (66, 50, and 33 % coverage). In those cases, all plant growth gets a debuff that
+rises with each threshold. This is both a way to push the whole island to collapse more quickly,
+for gameplay reasons, but also is a standin / representation of island wide effects on
+hydrology and climate that would occur. If the first threshold is passed, the player should have
+some limited leeway left to react/adapt - it should be possible to survive still if pigs are kept
+to a minimum or are even exterminated entirely. After the second, the island is collapsing. The 
+third is mainly there to speed things up once the gameover is on the horizon and the player can't
+really do anything anymore.
+
+###The "agents" - pigs and villagers
+
+####Pigs
+Pigs have "hunger" and "health" values. They eat underbrush off of tiles to decrease hunger. If they 
+don't find enough underbrush and the hunger stays high for too long, they lose health. If they loose
+all their health, they die. 
+Pigs roam around randomly. After they ate underbrush, they move to a different, random tile near them.
+There they eat again.
+
+####Villagers
+Villagers have a "health" value as well (representing their mood, more than their healt). Their health is
+impacted by the woods supply they gathered, if it runs too low. If they deplete their health,
+they "die", ie., they leave the island. They regain health if the wood stockpile is high enough.
+
+Villagers roam around randomly similar to the pigs, but they cut trees for wood. The wood stockpile is
+capped. Currently, no wood consumption takes place.
 
 
 
