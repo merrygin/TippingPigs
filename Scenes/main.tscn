@@ -71,10 +71,11 @@ offset_right = 978.0
 offset_bottom = 549.0
 bbcode_enabled = true
 text = "
-Du bist ein [b]Rahui[/b] auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
+Du bist ein Rahui auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
 
 Züchte genug Schweine, um deine Dorfbewohner glücklich zu machen - aber nicht zu viele! Sonst kippt die Insel in einen nicht-bewohnbaren Zustand...
 [color=aqua][url=https://godotengine.org]custom URLs[/url][/color] ... die kann man klickbar machen für Verweise usw."
+scroll_following = true
 metadata/_edit_use_anchors_ = true
 
 [node name="IslandOne" type="Sprite2D" parent="."]
