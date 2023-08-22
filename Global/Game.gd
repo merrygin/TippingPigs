@@ -27,6 +27,7 @@ var min_underbrush = 0.0
 var max_underbrush = 100.0
 var min_forest = 0.0
 var max_forest = 100.0
+@export var max_pigs : int = 300
 
 var tree_growth = 1
 var default_forest_tree_modifier = 1.5
@@ -35,6 +36,12 @@ var default_underbrush_growth = 0.1
 var ub_tree_growth_factor = 1
 var tree_ub_growth_factor = 1
 var surround_modifier = 0
+
+var wood : int = 0
+var zufriedenheit : int = 0
+var current_highscore : int = 0
+var alltime_highscore : int = 0
+var threshold_level = "green"
 
 var tile_list = []
 var legal_tiles = []

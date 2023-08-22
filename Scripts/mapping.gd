@@ -22,12 +22,16 @@ func count_tile_data():
 		tree_amount += Game.data_layer[entry].trees
 	Game.average_underbrush = snapped((underbrush_amount / total_entries), 0.01)
 	Game.average_tree_cover = snapped((tree_amount / total_entries), 0.01)
+	
 	if Game.average_tree_cover <= 66:
 		Game.global_threshold = -1
+		Game.threshold_level = "yellow"
 	elif Game.average_tree_cover <= 50:
 		Game.global_threshold = -2
+		Game.threshold_level = "red"
 	elif Game.average_tree_cover <= 33:
 		Game.global_threshold = -4
+		Game.threshold_level = "black"
 
 func get_legal_tiles():
 	# This loops through every used tile and puts the legal ones in the respective list

@@ -1,5 +1,7 @@
 extends Node2D
 
+var gameover = false
+
 @onready var pigs_node = $Level/Pigs
 @onready var villagers_node = $Level/Villagers
 @onready var graphs_node = $Level/graphPanel
@@ -18,12 +20,12 @@ func _ready():
 	# Only setup of "Data Layer" here....
 	Game.data_layer.clear() # to make sure no leftover data after restart
 	establish_data_map()
-	
-	# spawn an initial amount of little guys
-	spawn_villager(10)
-	spawn_pigs(10)
 	# fire the tutorial popups and pause game
 	pause_game()
+	# spawn an initial amount of little guys
+	spawn_villager(10)
+	spawn_pigs(2)
+
 	popup_control.get_child(2).fired = true
 	popup_control.get_child(2).show()
 	
@@ -79,21 +81,31 @@ func restart(): # I THINK it works now, yey
 	for villager in sail_away:
 		villager.queue_free()
 	
+	var popup_counter = popup_control.get_child_count() - 1
+	
+	while popup_counter >= 0:
+		popup_control.get_child(popup_counter).fired = false
+		popup_counter -= 1
 	
 	get_tree().reload_current_scene()
 	Game.global_threshold = 0
 	Game.ticks = 0 # reset ticks
+	Game.zufriedenheit = 0
+	if Game.alltime_highscore < Game.current_highscore:
+		Game.alltime_highscore = Game.current_highscore
+	Game.current_highscore = 0
+	gameover = false
 	print("Wir besiedeln eine neue Insel!")
-	
-
+	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
+	pause_game()
 
 func _process(delta):
 	# fire first info panel when first desolation appears
-	if Game.deso_amount == 1 and popup_control.get_child(0).fired == false:
+	if Game.deso_amount == 1 and Game.ticks > 1  and popup_control.get_child(0).fired == false:
 		pause_game()
 		popup_control.get_child(0).fired = true
 		popup_control.get_child(0).show()
-	if Game.grass_amount == 200 and popup_control.get_child(1).fired == false:
+	if Game.grass_amount == 200 and Game.ticks > 1  and popup_control.get_child(1).fired == false:
 		pause_game()
 		popup_control.get_child(1).fired = true
 		popup_control.get_child(1).show()
@@ -105,16 +117,46 @@ func _process(delta):
 		pause_game()
 		popup_control.get_child(5).fired = true
 		popup_control.get_child(5).show()
-	if Game.deso_percent == 100 and Game.ticks > 1 and popup_control.get_child(6).fired == false:
+		
+	# if max piggies near popup
+	if Game.pigHerd >= int(Game.max_pigs / 2 - 10 ) and Game.ticks > 1 and popup_control.get_child(7).fired == false:
 		pause_game()
-		popup_control.get_child(6).fired = true
-		popup_control.get_child(6).show()
+		popup_control.get_child(7).fired = true
+		popup_control.get_child(7).show()
+		print("Achtung, piggy threshold incoming!")
+		
+	# Game over screen popups!
+	if Game.deso_percent == 100 and Game.ticks > 1 and popup_control.get_child(6).fired == false:
+		game_over()
+		
+	if Game.pigHerd >= Game.max_pigs and Game.ticks > 1 and popup_control.get_child(6).fired == false:
+		game_over()
+
+	if Game.villager_count <= 0 and Game.ticks > 1:
+		game_over()
+		
+func game_over():
+	pause_game()
+	popup_control.get_child(6).fired = true
+	popup_control.get_child(6).show()
+	gameover = true
+	
+	# check threshold state and deduct points if necessary
+	if Game.threshold_level == "yellow":
+		Game.current_highscore = int(Game.current_highscore * 0.67)
+	elif Game.threshold_level == "red":
+		Game.current_highscore = int(Game.current_highscore * 0.34)
+	elif Game.threshold_level == "black":
+		Game.current_highscore = int(Game.current_highscore * 0.1)
 	
 func spawn_villager(amount):
 	for x in range(0, amount):
 		var villTemp = villager.instantiate()
+		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
+		#rand_pos = island_map.local_to_map(rand_pos)
+		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		#var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
-		villTemp.position = Vector2i(400, 300)
+		villTemp.position = rand_xy
 		# important to put new pig as child on Pigs 2Dnode to make sure the
 		# node paths are working!
 		# TODO: rewrite this to use signals, so positions become irrelevant
@@ -124,6 +166,8 @@ func spawn_villager(amount):
 func spawn_pigs(amount):
 	for x in range(0, amount):
 		var pigTemp = pig.instantiate()
+		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
+		#rand_pos = island_map.local_to_map(rand_pos)
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		pigTemp.position = rand_xy
 		# important to put new pig as child on Pigs 2Dnode to make sure the
@@ -145,22 +189,32 @@ func _on_pig_spawn_pressed():
 	spawn_pigs(amount)
 
 func _input(event):
+	
 	if event.is_action_pressed("add_pig"):
 		spawn_pigs(1)
 	elif event.is_action_pressed("super_pig"):
 		spawn_pigs(10)
 		
 	elif event.is_action_pressed("pause_game"):
-		pause_game()
+		if gameover == false:
+			pause_game()
 			
 	elif event.is_action_pressed("restart_game"):
 		restart() 
+	elif event.is_action_pressed("ship_pig"):
+		despawn_pigs(1)
 	
+	elif event.is_action_pressed("feast_pigs"):
+		_on_pig_feast_pressed()
+		
 	elif event.is_action_pressed("right_click"):
 		
 		for popup in popup_control.get_children():
 			popup.hide()
 		pause_game()
+		
+	elif event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
 			
 func pause_game():
 	var pause_value = get_tree().paused
@@ -173,11 +227,13 @@ func pause_game():
 		for popup in popup_control.get_children():
 			popup.hide()
 		
-# delete all pigs on button press
+# delete half the pigs (with cooldown?)
 func _on_pig_feast_pressed():
-	var to_cull = len(get_tree().get_nodes_in_group("pigs_group"))
+	var to_cull = int(len(get_tree().get_nodes_in_group("pigs_group")) / 2)
 	despawn_pigs(to_cull)
-
+	$Level/PigFeast/feast_cooldown.start()
+	$Level/PigFeast.disabled = true
+	
 func hover_tile_info():
 	# here I'd like to build a small little function to display the tile
 	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
@@ -185,7 +241,7 @@ func hover_tile_info():
 
 
 func _on_button_pressed():
-	print("click!")
+	#print("click!")
 	popup_control.get_child(2).hide()
 	popup_control.get_child(3).fired = true
 	popup_control.get_child(3).show()
@@ -199,3 +255,28 @@ func _on_button_start_pressed():
 
 func _on_pig_kill_some_pressed():
 	despawn_pigs(1)
+
+
+func _on_lvl_timer_timeout():
+	# count healthy pigs, spawn 1 new pig for each 2 healthy pigs
+	var healthy_pigs = 0
+	for pig in get_tree().get_nodes_in_group("pigs_group"):
+		if pig.health >= 50:
+			healthy_pigs += 1
+	var reproduce_pigs = int(healthy_pigs / 2)
+	spawn_pigs(reproduce_pigs)
+	
+	# adjust the score - replace highscore if higher
+	var tick_score = Game.pigHerd + Game.wood + (Game.forest_percent - 50 ) - Game.deso_amount
+	var new_score = Game.zufriedenheit + tick_score
+	if Game.current_highscore < new_score:
+		Game.current_highscore = new_score
+	Game.zufriedenheit = new_score
+
+
+func _on_feast_cooldown_timeout():
+	$Level/PigFeast.disabled = false
+
+
+func _on_gameover_timer_timeout():
+	game_over()
