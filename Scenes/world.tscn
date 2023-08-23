@@ -451,6 +451,7 @@ offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Popup1" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
 z_index = 9
 layout_mode = 1
 anchors_preset = -1
@@ -680,14 +681,13 @@ offset_bottom = 349.0
 text = "Weiter! (E)"
 
 [node name="Popup5" type="Panel" parent="infoPopUps/popupControl"]
-visible = false
 z_index = 9
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 5.875
 anchor_top = 4.625
 anchor_right = 19.125
-anchor_bottom = 14.35
+anchor_bottom = 7.275
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_gfs0r")
@@ -710,14 +710,7 @@ text = "|-|-|- GAME OVER -|-|-|
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-
-[node name="ButtonStart5" type="Button" parent="infoPopUps/popupControl/Popup5"]
-layout_mode = 0
-offset_left = 207.0
-offset_top = 138.0
-offset_right = 379.0
-offset_bottom = 235.0
-text = "Weiter! (E)"
+metadata/_edit_lock_ = true
 
 [node name="Popup6" type="Panel" parent="infoPopUps/popupControl"]
 visible = false
@@ -760,6 +753,184 @@ offset_right = 379.0
 offset_bottom = 235.0
 text = "Weiter! (E)"
 
+[node name="GameOver1" type="Panel" parent="infoPopUps/popupControl"]
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.925
+anchor_top = 7.275
+anchor_right = 19.125
+anchor_bottom = 16.7
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pkmop")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/GameOver1"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Kipppunkte sind schwer vorherzusehen. Lange scheint alles relativ normal, bis sich ganz plötzlich alles ändert. Aber wenn man Kippunkte früh genug erkennt und sie versteht, kann man schlimmeres verhindern. Allerdings muss man schnell und bestimmt handeln, andernfalls kann ein Kipppunkt den nächsten auslösen - und so einen ganzen Dominoeffekt anstoßen. 
+
+Das haben auch viele Pazifikbewohner in der Geschichte bemerkt. Sie haben deswegen Leute wie den Rahui bestimmt, die darauf aufpassten, dass niemand zu viele Schweine züchtet, zu viel Holz rodet oder zu viele Fische fängt. Manche haben sogar die Schweinezucht ganz aufgegeben, weil ihre Inseln zu fragil waren. So konnten ihre Gesellschaften lange überleben. 
+"
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="ToGameOver2" type="Button" parent="infoPopUps/popupControl/GameOver1"]
+z_index = 9
+layout_mode = 0
+offset_left = 416.0
+offset_top = 324.0
+offset_right = 528.0
+offset_bottom = 379.0
+text = "Weiter..."
+
+[node name="GameOver2" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.925
+anchor_top = 7.275
+anchor_right = 19.125
+anchor_bottom = 16.7
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pkmop")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/GameOver2"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Manche Inselgesellschaften haben es aber nicht geschafft. Sie waren vielleicht abgelenkt von Streitigkeiten, Krieg, oder sie haben die Zeichen einer schlechter werdenden Umwelt aus Angst, Gier oder einfach Unverständnis ignoriert. Genau können wir das heutzutage leider nicht mehr nachvollziehen. Fakt ist leider, das manche Inseln sehr an Fruchtbarkeit eingebüßt haben und viel weniger Menschen auf ihnen Leben konnten, als früher. Manche Inseln wurden vollständig verlassen.
+"
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="ToGameOver3" type="Button" parent="infoPopUps/popupControl/GameOver2"]
+z_index = 9
+layout_mode = 0
+offset_left = 416.0
+offset_top = 324.0
+offset_right = 528.0
+offset_bottom = 379.0
+text = "Weiter..."
+
+[node name="GameOver3" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.925
+anchor_top = 7.275
+anchor_right = 19.125
+anchor_bottom = 16.7
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pkmop")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/GameOver3"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Heute sind die Inseln im Pazifik in ähnlicher Weise gefährdet - nur noch stärker. Manche Inseln drohen durch den Meeresspiegelanstieg komplett zu versinken. Alle sind durch das sich verändernde Klima gefährdet. Diesmal liegen die Anpassungsmöglichkeiten allerdings bei allen Menschen auf der Welt, denn die Probleme - der CO2-Ausstoss, die Zerstörung der Wälder, Plastikmüll, der Verbrauch an Wasser - diese Probleme werden überall verursacht. Und oft sogar in größerem Maß bei uns als bei den am stärksten Betroffenen.
+"
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="ToGameOver4" type="Button" parent="infoPopUps/popupControl/GameOver3"]
+z_index = 9
+layout_mode = 0
+offset_left = 416.0
+offset_top = 324.0
+offset_right = 528.0
+offset_bottom = 379.0
+text = "Weiter..."
+
+[node name="GameOver4" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
+z_index = 9
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 5.85
+anchor_top = 7.3
+anchor_right = 19.05
+anchor_bottom = 16.725
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_pkmop")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="infoPopUps/popupControl/GameOver4"]
+z_index = 11
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Wir am Max-Planck Institut versuchen zu verstehen, wie Kipppunkte und diese Probleme genau zusammen hängen. Das machen wir in der Hoffnung, dass wir durch ein besseres Verständnis bessere und effektivere Lösungen finden können. 
+
+Aber am Ende müssen wir gemeinsam die Probleme lösen - so wie die polynesischen Inselbewohner im Pazifik damals. 
+
+Je eher, desto besser."
+horizontal_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="NewGame" type="Button" parent="infoPopUps/popupControl/GameOver4"]
+z_index = 9
+layout_mode = 0
+offset_left = 206.0
+offset_top = 245.0
+offset_right = 318.0
+offset_bottom = 300.0
+text = "Neustarten"
+
+[node name="RecordHighscore" type="Button" parent="infoPopUps/popupControl/GameOver4"]
+z_index = 9
+layout_mode = 0
+offset_left = 198.0
+offset_top = 315.0
+offset_right = 329.0
+offset_bottom = 370.0
+text = "Score speichern"
+
 [connection signal="pressed" from="Level/PigSpawn" to="." method="_on_pig_spawn_pressed"]
 [connection signal="pressed" from="Level/PigFeast" to="." method="_on_pig_feast_pressed"]
 [connection signal="timeout" from="Level/PigFeast/feast_cooldown" to="." method="_on_feast_cooldown_timeout"]
@@ -772,5 +943,7 @@ text = "Weiter! (E)"
 [connection signal="pressed" from="infoPopUps/popupControl/tutorialPopup2/ButtonStart" to="." method="_on_button_start_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/Popup3/ButtonStart3" to="." method="_on_button_start_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/Popup4/ButtonStart4" to="." method="_on_button_start_pressed"]
-[connection signal="pressed" from="infoPopUps/popupControl/Popup5/ButtonStart5" to="." method="_on_button_start_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/Popup6/ButtonStart6" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="infoPopUps/popupControl/GameOver1/ToGameOver2" to="." method="_on_to_game_over_2_pressed"]
+[connection signal="pressed" from="infoPopUps/popupControl/GameOver1/ToGameOver2" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="infoPopUps/popupControl/GameOver2/ToGameOver3" to="." method="_on_to_game_over_3_pressed"]

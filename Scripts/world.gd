@@ -97,7 +97,6 @@ func restart(): # I THINK it works now, yey
 	gameover = false
 	print("Wir besiedeln eine neue Insel!")
 	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
-	pause_game()
 
 func _process(delta):
 	# fire first info panel when first desolation appears
@@ -141,6 +140,9 @@ func game_over():
 	popup_control.get_child(6).show()
 	gameover = true
 	
+	popup_control.get_child(8).fired = true
+	popup_control.get_child(8).show()
+	
 	# check threshold state and deduct points if necessary
 	if Game.threshold_level == "yellow":
 		Game.current_highscore = int(Game.current_highscore * 0.67)
@@ -177,10 +179,11 @@ func spawn_pigs(amount):
 		pigTemp.add_to_group("pigs_group")
 
 func despawn_pigs(amount: int):
-	var all_pigs = get_tree().get_nodes_in_group("pigs_group")
-	for x in range(0, amount):
-		var pig_to_migrate = all_pigs.pop_front()
-		pig_to_migrate.queue_free()
+	if Game.pigHerd > 0:
+		var all_pigs = get_tree().get_nodes_in_group("pigs_group")
+		for x in range(0, amount):
+			var pig_to_migrate = all_pigs.pop_front()
+			pig_to_migrate.queue_free()
 
 	
 # spawn one pig on random position
@@ -205,7 +208,8 @@ func _input(event):
 		despawn_pigs(1)
 	
 	elif event.is_action_pressed("feast_pigs"):
-		_on_pig_feast_pressed()
+		if $Level/PigFeast.disabled == false:
+			_on_pig_feast_pressed()
 		
 	elif event.is_action_pressed("right_click"):
 		
@@ -241,6 +245,7 @@ func hover_tile_info():
 
 
 func _on_button_pressed():
+	# Tutorial "Weiter..." Button
 	#print("click!")
 	popup_control.get_child(2).hide()
 	popup_control.get_child(3).fired = true
@@ -280,3 +285,16 @@ func _on_feast_cooldown_timeout():
 
 func _on_gameover_timer_timeout():
 	game_over()
+
+
+func _on_to_game_over_2_pressed():
+	# Go to GameOver2 popup
+	popup_control.get_child(8).hide()
+	popup_control.get_child(9).fired = true
+	popup_control.get_child(9).show()
+
+func _on_to_game_over_3_pressed():
+	# Go to GameOver3 popup
+	popup_control.get_child(9).hide()
+	popup_control.get_child(10).fired = true
+	popup_control.get_child(10).show()

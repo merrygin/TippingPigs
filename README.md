@@ -249,7 +249,8 @@ Testing:
 
 - - -
 Note: This is a preliminary set of sources that aided in the design and historical background of the game. Most of this was the literature of a seminar paper
-I wrote during my bachelor's studies called "Warum starb das polynesische Schwein? Dynami von Ausrottung und Sozialem Wandel in einem eng begrenzten Lebensraum"
+I wrote during my bachelor's studies called "Warum starb das polynesische Schwein? Dynamik von Ausrottung und Sozialem Wandel in einem eng begrenzten Lebensraum"; so this might be somewhat
+outdated and missing important literature.
 - - -
  
 Allen, Melinda und Craig, Jacqueline, „Dynamics of Polynesian Subsistence. Insights from Archeofauna and Stable Isotope Studies, Aitutaki, Southern Cook Islands“. In: Pacific Science, 63/4, S. 477-506.
