@@ -21,10 +21,11 @@ Game="*res://Global/Game.gd"
 
 [display]
 
-window/size/viewport_width=1600
-window/size/viewport_height=900
+window/size/viewport_width=1433
+window/size/viewport_height=1433
 window/size/mode=3
 window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [editor]
 
@@ -87,3 +88,4 @@ feast_pigs={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+viewport/transparent_background=true
