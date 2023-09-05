@@ -222,8 +222,12 @@ capped. Currently, no wood consumption takes place.
 
 ## Developers
 
-Current:
+Programming & Design:
 	Jascha Schmitz
+
+Art:
+	Hans-Georg Schell
+	Michelle O'Reilly
 
 Former:
 	---
@@ -241,7 +245,8 @@ Testing:
 	Laura von Welczek,
 	Malte Vogl,
 	Vogl Junior # 1,
-	Vogl Junior # 2 
+	Vogl Junior # 2,
+	Raphael Schlattmann
 	
 	
 

@@ -1,6 +1,7 @@
 extends Node2D
 
 var gameover = false
+var game_won = false
 
 @onready var pigs_node = $Level/Pigs
 @onready var villagers_node = $Level/Villagers
@@ -95,9 +96,10 @@ func restart(): # I THINK it works now, yey
 		Game.alltime_highscore = Game.current_highscore
 	Game.current_highscore = 0
 	gameover = false
+	game_won = false
 	print("Wir besiedeln eine neue Insel!")
 	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
-
+	
 func _process(delta):
 	# fire first info panel when first desolation appears
 	if Game.deso_amount == 1 and Game.ticks > 1  and popup_control.get_child(0).fired == false:
@@ -135,21 +137,18 @@ func _process(delta):
 		game_over()
 		
 func game_over():
+	# This fires when the game is lost / the island is destroyed
 	pause_game()
 	popup_control.get_child(6).fired = true
 	popup_control.get_child(6).show()
+	popup_control.get_child(6).get_child(1).hide()
 	gameover = true
 	
 	popup_control.get_child(8).fired = true
 	popup_control.get_child(8).show()
 	
-	# check threshold state and deduct points if necessary
-	if Game.threshold_level == "yellow":
-		Game.current_highscore = int(Game.current_highscore * 0.67)
-	elif Game.threshold_level == "red":
-		Game.current_highscore = int(Game.current_highscore * 0.34)
-	elif Game.threshold_level == "black":
-		Game.current_highscore = int(Game.current_highscore * 0.1)
+	# Your highscore is set to 0, because you FAILED to save the island long enough
+	Game.current_highscore = 0 
 	
 func spawn_villager(amount):
 	for x in range(0, amount):
@@ -253,7 +252,6 @@ func _on_button_pressed():
 
 
 func _on_button_start_pressed():
-	print("click-ity!")
 	popup_control.get_child(3).hide()
 	pause_game()
 
@@ -284,8 +282,32 @@ func _on_feast_cooldown_timeout():
 
 
 func _on_gameover_timer_timeout():
-	game_over()
+	game_completed()
 
+func game_completed():
+	# This gets used when the game is completed successfully -> only then the current highscore counts!
+	pause_game()
+	gameover = true
+	game_won = true
+	
+	# check threshold state and deduct points if necessary
+	if Game.threshold_level == "yellow":
+		Game.current_highscore = int(Game.current_highscore * 0.67)
+	elif Game.threshold_level == "red":
+		Game.current_highscore = int(Game.current_highscore * 0.34)
+	elif Game.threshold_level == "black":
+		Game.current_highscore = int(Game.current_highscore * 0.1)
+
+	
+	popup_control.get_child(6).fired = true
+	popup_control.get_child(6).show()
+	popup_control.get_child(6).get_child(0).hide()
+
+	
+	popup_control.get_child(8).fired = true
+	popup_control.get_child(8).show()
+	
+	
 
 func _on_to_game_over_2_pressed():
 	# Go to GameOver2 popup
@@ -298,3 +320,16 @@ func _on_to_game_over_3_pressed():
 	popup_control.get_child(9).hide()
 	popup_control.get_child(10).fired = true
 	popup_control.get_child(10).show()
+
+func _on_to_game_over_4_pressed():
+	# Go to GameOver4 popup
+	popup_control.get_child(10).hide()
+	popup_control.get_child(11).fired = true
+	popup_control.get_child(11).show()
+	if game_won != true:
+		popup_control.get_child(11).get_child(2).hide()
+
+
+func _on_new_game_pressed():
+	pause_game()
+	restart()

@@ -19,6 +19,13 @@ config/icon="res://icon.svg"
 
 Game="*res://Global/Game.gd"
 
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/size/mode=3
+window/stretch/mode="viewport"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

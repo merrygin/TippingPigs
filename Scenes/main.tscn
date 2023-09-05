@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2jd5iux3i08h"]
+[gd_scene load_steps=8 format=3 uid="uid://b2jd5iux3i08h"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nlieh"]
-[ext_resource type="Texture2D" uid="uid://d0mj0avd0hhrn" path="res://assets/island_one.jpg" id="2_ggw5r"]
-[ext_resource type="Texture2D" uid="uid://rnuk3yg7lolu" path="res://assets/hog_one.jpg" id="3_pogg2"]
+[ext_resource type="Texture2D" uid="uid://d0mj0avd0hhrn" path="res://assets/Placeholder_Art/island_one.jpg" id="2_pnpbw"]
+[ext_resource type="FontFile" uid="uid://3707jrg17tqb" path="res://assets/Font/otf/Mister Pixel Regular.otf" id="2_wo265"]
+[ext_resource type="Texture2D" uid="uid://rnuk3yg7lolu" path="res://assets/Placeholder_Art/hog_one.jpg" id="3_o8bqx"]
 [ext_resource type="Script" path="res://Scripts/Highscore.gd" id="4_na5ei"]
 
 [sub_resource type="GDScript" id="GDScript_hj3rh"]
@@ -20,6 +21,7 @@ func _process(delta):
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_mqiaa"]
+font = ExtResource("2_wo265")
 font_size = 60
 font_color = Color(0.988235, 0.992157, 0, 1)
 outline_size = 9
@@ -56,19 +58,22 @@ offset_bottom = 374.0
 text = "Verlassen"
 
 [node name="Title" type="Label" parent="."]
-offset_left = 400.0
-offset_top = 107.0
-offset_right = 745.0
-offset_bottom = 211.0
+offset_left = 404.0
+offset_top = 133.0
+offset_right = 749.0
+offset_bottom = 219.0
 text = "TippingPigs"
 label_settings = SubResource("LabelSettings_mqiaa")
 horizontal_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 188.0
-offset_top = 376.0
-offset_right = 978.0
-offset_bottom = 549.0
+texture_filter = 1
+offset_left = 100.0
+offset_top = 377.0
+offset_right = 1068.0
+offset_bottom = 573.0
+theme_override_fonts/normal_font = ExtResource("2_wo265")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "
 Du bist ein Rahui auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine und kann von ihnen nicht genug kriegen. Aber die Schweine zerstören Stück für Stück den Wald auf der Insel. 
@@ -76,19 +81,18 @@ Du bist ein Rahui auf einer polyneischen Pazifikinsel. Dein Dorf liebt Schweine 
 Züchte genug Schweine, um deine Dorfbewohner glücklich zu machen - aber nicht zu viele! Sonst kippt die Insel in einen nicht-bewohnbaren Zustand...
 [color=aqua][url=https://godotengine.org]custom URLs[/url][/color] ... die kann man klickbar machen für Verweise usw."
 scroll_following = true
-metadata/_edit_use_anchors_ = true
 
 [node name="IslandOne" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(569, 364)
 scale = Vector2(0.343, 0.343)
-texture = ExtResource("2_ggw5r")
+texture = ExtResource("2_pnpbw")
 metadata/_edit_lock_ = true
 
 [node name="HogOne" type="Sprite2D" parent="."]
 position = Vector2(357, 596)
 scale = Vector2(0.026, 0.026)
-texture = ExtResource("3_pogg2")
+texture = ExtResource("3_o8bqx")
 
 [node name="Highscore" type="Label" parent="."]
 offset_left = 419.0

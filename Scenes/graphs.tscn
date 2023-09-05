@@ -7,16 +7,18 @@ z_index = 9
 layout_mode = 3
 anchors_preset = 0
 offset_top = -1.0
-offset_right = 425.0
+offset_right = 426.0
 offset_bottom = 322.0
 
 [node name="trackTiles" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 425.0
-offset_bottom = 323.0
+offset_right = 498.0
+offset_bottom = 400.0
 script = ExtResource("1_bbnja")
 x_max = 3000.0
 x_label = "Ticks"
 y_max = 1000.0
 y_label = "Anzahl"
 background_color = Color(0.187176, 0.187176, 0.187176, 1)
+grid_horizontal_visible = true
+grid_vertical_visible = true
