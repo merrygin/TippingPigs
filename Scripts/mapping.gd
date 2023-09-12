@@ -1,3 +1,4 @@
+class_name IslandMap
 extends TileMap
 
 # doing this all the time is very inefficient performance wise

@@ -158,6 +158,7 @@ func spawn_villager(amount):
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		#var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		villTemp.position = rand_xy
+		villTemp.velocity = Vector2.ZERO
 		# important to put new pig as child on Pigs 2Dnode to make sure the
 		# node paths are working!
 		# TODO: rewrite this to use signals, so positions become irrelevant
@@ -167,10 +168,9 @@ func spawn_villager(amount):
 func spawn_pigs(amount):
 	for x in range(0, amount):
 		var pigTemp = pig.instantiate()
-		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
-		#rand_pos = island_map.local_to_map(rand_pos)
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		pigTemp.position = rand_xy
+		
 		# important to put new pig as child on Pigs 2Dnode to make sure the
 		# node paths are working!
 		# TODO: rewrite this to use signals, so positions become irrelevant
@@ -236,12 +236,6 @@ func _on_pig_feast_pressed():
 	despawn_pigs(to_cull)
 	$Level/PigFeast/feast_cooldown.start()
 	$Level/PigFeast.disabled = true
-	
-func hover_tile_info():
-	# here I'd like to build a small little function to display the tile
-	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
-	pass
-
 
 func _on_button_pressed():
 	# Tutorial "Weiter..." Button
