@@ -2989,7 +2989,6 @@ process_priority = -1
 script = ExtResource("2_2i655")
 
 [node name="PigSpawn" type="Button" parent="Level"]
-visible = false
 z_index = 9
 texture_filter = 1
 offset_left = 124.0
@@ -3001,7 +3000,6 @@ shortcut = SubResource("Shortcut_figl6")
 text = "Schwein züchten (F)"
 
 [node name="PigFeast" type="Button" parent="Level"]
-visible = false
 z_index = 144
 texture_filter = 1
 offset_left = 124.0
@@ -3017,7 +3015,6 @@ script = ExtResource("5_mphum")
 wait_time = 10.0
 
 [node name="PigKillSome" type="Button" parent="Level"]
-visible = false
 z_index = 144
 texture_filter = 1
 offset_left = 125.0
@@ -3029,7 +3026,6 @@ text = "Schwein verschiffen (S)
 "
 
 [node name="EnvironmentLabel" type="Label" parent="Level"]
-visible = false
 z_index = 9
 offset_left = 673.0
 offset_top = 584.0
@@ -3041,7 +3037,6 @@ autowrap_mode = 2
 script = ExtResource("2_xy2v2")
 
 [node name="PigherdLabel" type="Label" parent="Level"]
-visible = false
 z_index = 1
 offset_left = 635.0
 offset_top = 527.0
@@ -3051,7 +3046,6 @@ text = "Schweineherde: "
 script = ExtResource("3_gclk7")
 
 [node name="UIBox" type="Panel" parent="Level"]
-visible = false
 z_index = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -3062,7 +3056,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Log" type="Panel" parent="Level"]
-visible = false
 z_index = 1
 offset_left = -273.0
 offset_top = 554.0
@@ -3143,7 +3136,6 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="graphPanel" type="Control" parent="Level"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 781.0
@@ -3169,7 +3161,6 @@ autostart = true
 script = ExtResource("13_wngrg")
 
 [node name="infoPopUps" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="popupControl" type="Control" parent="infoPopUps"]
 layout_mode = 3

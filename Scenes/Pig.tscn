@@ -9,12 +9,12 @@
 [sub_resource type="GDScript" id="GDScript_4h335"]
 script/source = "extends CharacterBody2D
 
-# constants
+\"\"\"constants\"\"\"
 const ACCELERATION = 300
 const MAX_SPEED = 50
 const TOLERANCE = 4.0 # this will let the pig float around the target point
 
-# enums
+\"\"\"enums\"\"\"
 enum {
 	IDLE,
 	WANDER,
@@ -31,31 +31,31 @@ enum orient_td {
 	DOWN
 }\"\"\"
 
-# non-exported variables
+\"\"\"non-exported variables\"\"\"
 var state = IDLE
 
-# exported variables
+\"\"\"exported variables\"\"\"
 @export var hunger = 0
 @export var health = 10
 
-# onready variables
+\"\"\"onready variables\"\"\"
 @onready var stats = $Stats
 @onready var start_position = global_position
 @onready var target_position = global_position
 @onready var island_map : TileMap = $\"../../IslandMap\"
 @onready var world : Node2D = $\"../..\"
 
+\"\"\"Standard Functions\"\"\"
+
 func _ready():
 	get_node(\"AnimatedSprite2D\").play(\"Sleep\")
-
 	
 func _process(delta):
 	hunger == 10
-
 	update_state()
 
+\"\"\"Custom Functions\"\"\"
 
-	
 # return only local map position
 func get_local_map_position(pos):
 	var map_position = island_map.local_to_map(pos)
@@ -69,8 +69,6 @@ func get_local_map_tile_data(pos):
 	#var test_data = tile_data.get_custom_data(\"Underbrush\")
 	
 	return tile_data
-	
-	
 
 # Check state, check if hungry -> if hungry and if no food available, change state to roaming
 func update_state():
@@ -80,14 +78,14 @@ func update_state():
 			# if IDLE and getting hungry, change state to hungry
 			if hunger > 5:
 				state = HUNGRY
-				print(\"Pig got hungry: {0}.\".format([self.hunger]))
+
 		HUNGRY:
 			get_node(\"AnimatedSprite2D\").play(\"Sit\")
 			# pull underbrush stats from current tile out of games data layer
 			var tile_coords = get_local_map_position(self.position)
-			print(\"Pig now at {0}\".format([tile_coords]))
+			#print(\"Pig now at {0}\".format([tile_coords]))
 			var available_underbrush = Game.data_layer[tile_coords][\"underbrush\"]
-			print(\"At this tile, {0} underbrush is left\".format([available_underbrush]))
+			#print(\"At this tile, {0} underbrush is left\".format([available_underbrush]))
 			
 			# check if enough underbrush for eating
 			if available_underbrush >= 10:
@@ -95,8 +93,7 @@ func update_state():
 				var new_underbrush = available_underbrush - 5
 				# go to data layer and change data
 				Game.data_layer[tile_coords][\"underbrush\"] = new_underbrush
-				print(\"Pig ate here and now there is {0} underbrush left.\".format([Game.data_layer[tile_coords][\"underbrush\"]]))
-				
+			
 				if new_underbrush < 10:
 					# here comes the tile conversion algo
 					# should also be its own func probably handled in another script
@@ -104,13 +101,12 @@ func update_state():
 					Game.data_layer[tile_coords][\"atlas_coord\"] = Vector2i(0, 0)
 					Game.data_layer[tile_coords][\"forest\"] = 0
 					island_map.set_cell(0, tile_coords, 3, Vector2i(0, 0))
-					print(\"The Forest degraded!\")
 			
 				state = IDLE
 			else:
 				state = WANDER
 				update_target_position()
-				print(\"Nothing to eat here, will wander.\")
+
 
 	# do I have to say something about wander too?! its only used for moving,
 	# so Id like to have it in the physics function (or do I?)
@@ -554,7 +550,7 @@ texture_filter = 1
 position = Vector2(6.77626e-21, 6.77626e-21)
 sprite_frames = SubResource("SpriteFrames_wqbco")
 animation = &"Eat_l"
-frame_progress = 0.805353
+frame_progress = 0.202965
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
