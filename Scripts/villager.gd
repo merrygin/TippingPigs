@@ -134,7 +134,7 @@ func update_state():
 				var new_trees = available_trees - trees_cut_per_cut
 				if new_trees <= 0:
 					new_trees = 0 
-				print("EAT WOOD")
+				#print("EAT WOOD")
 				lumber += 1
 
 				# go to data layer and change data
