@@ -1,23 +1,44 @@
-[gd_scene load_steps=23 format=3 uid="uid://cpjfms7o5ghmw"]
+[gd_scene load_steps=26 format=3 uid="uid://cpjfms7o5ghmw"]
 
 [ext_resource type="Script" path="res://Scripts/villager.gd" id="1_lm7hp"]
-[ext_resource type="Script" path="res://Scripts/finite_state_machine.gd" id="3_yaub0"]
-[ext_resource type="Script" path="res://Scripts/villager_idle_state.gd" id="4_ambke"]
-[ext_resource type="Script" path="res://Scripts/villager_walk_state.gd" id="5_5h17t"]
+[ext_resource type="Texture2D" uid="uid://ck5oo0a8f6rtb" path="res://assets/SelielTheShaper_Art/fbas_01body_human_00.png" id="2_7lpxq"]
 [ext_resource type="Texture2D" uid="uid://3g8sainl5l5q" path="res://assets/SelielTheShaper_Art/Download_Farmer Base/farmer base sheets/01body/fbas_1body_human_00.png" id="6_5b3i8"]
-[ext_resource type="Script" path="res://Scripts/villager_chop_state.gd" id="6_g6yxe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g4c4d"]
 radius = 8.0
 height = 22.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dhpsj"]
-atlas = ExtResource("6_5b3i8")
-region = Rect2(16, 14, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa48q"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(192, 640, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2hwf5"]
-atlas = ExtResource("6_5b3i8")
-region = Rect2(80, 207, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xamo3"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(192, 640, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4oqr"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(320, 640, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbijq"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(320, 640, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgsmb"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8b8mp"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(0, 960, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10non"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(64, 960, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8tu4"]
+atlas = ExtResource("2_7lpxq")
+region = Rect2(0, 768, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5hrr4"]
 atlas = ExtResource("6_5b3i8")
@@ -71,29 +92,58 @@ region = Rect2(400, 207, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dhpsj")
+"texture": SubResource("AtlasTexture_oa48q")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dhpsj")
+"texture": SubResource("AtlasTexture_xamo3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dhpsj")
+"texture": SubResource("AtlasTexture_j4oqr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2hwf5")
+"texture": SubResource("AtlasTexture_tbijq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2hwf5")
+"texture": SubResource("AtlasTexture_tbijq")
+}],
+"loop": true,
+"name": &"Chop",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgsmb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dhpsj")
+"texture": SubResource("AtlasTexture_sgsmb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dhpsj")
+"texture": SubResource("AtlasTexture_8b8mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8b8mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10non")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10non")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgsmb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8tu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8tu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8tu4")
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -166,24 +216,5 @@ shape = SubResource("CapsuleShape2D_g4c4d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ove7l")
-animation = &"Move_lr"
-metadata/_edit_lock_ = true
-
-[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
-script = ExtResource("3_yaub0")
-state = NodePath("VillagerIdleState")
-
-[node name="VillagerIdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("4_ambke")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
-
-[node name="VillagerWalkState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("5_5h17t")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
-
-[node name="VillagerChopState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("6_g6yxe")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
+animation = &"Idle"
+frame_progress = 0.850134

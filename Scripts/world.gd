@@ -90,6 +90,7 @@ func restart(): # I THINK it works now, yey
 	
 	get_tree().reload_current_scene()
 	Game.global_threshold = 0
+	Game.wood = 0
 	Game.ticks = 0 # reset ticks
 	Game.zufriedenheit = 0
 	if Game.alltime_highscore < Game.current_highscore:
@@ -135,7 +136,8 @@ func _process(delta):
 
 	if Game.villager_count <= 0 and Game.ticks > 1:
 		game_over()
-		
+	
+	
 func game_over():
 	# This fires when the game is lost / the island is destroyed
 	pause_game()
@@ -207,7 +209,7 @@ func _input(event):
 		despawn_pigs(1)
 	
 	elif event.is_action_pressed("feast_pigs"):
-		if $Level/PigFeast.disabled == false:
+		if $Level/GUI/HBoxContainer/Buttons/PigFeast.disabled == false:
 			_on_pig_feast_pressed()
 		
 	elif event.is_action_pressed("right_click"):
@@ -234,8 +236,8 @@ func pause_game():
 func _on_pig_feast_pressed():
 	var to_cull = int(len(get_tree().get_nodes_in_group("pigs_group")) / 2)
 	despawn_pigs(to_cull)
-	$Level/PigFeast/feast_cooldown.start()
-	$Level/PigFeast.disabled = true
+	$Level/GUI/HBoxContainer/Buttons/PigFeast/feast_cooldown.start()
+	$Level/GUI/HBoxContainer/Buttons/PigFeast.disabled = true
 
 func _on_button_pressed():
 	# Tutorial "Weiter..." Button
@@ -245,8 +247,11 @@ func _on_button_pressed():
 	popup_control.get_child(3).show()
 
 
-func _on_button_start_pressed():
+func _on_start_button_pressed():
 	popup_control.get_child(3).hide()
+	pause_game()
+
+func _on_button_start_pressed():
 	pause_game()
 
 
@@ -256,11 +261,8 @@ func _on_pig_kill_some_pressed():
 
 func _on_lvl_timer_timeout():
 	# count healthy pigs, spawn 1 new pig for each 2 healthy pigs
-	var healthy_pigs = 0
-	for pig in get_tree().get_nodes_in_group("pigs_group"):
-		if pig.health >= 50:
-			healthy_pigs += 1
-	var reproduce_pigs = int(healthy_pigs / 2)
+	var reproduce_pigs = get_tree().get_nodes_in_group("pigs_group").size()
+	reproduce_pigs = int(reproduce_pigs / 2)
 	spawn_pigs(reproduce_pigs)
 	
 	# adjust the score - replace highscore if higher
@@ -272,8 +274,7 @@ func _on_lvl_timer_timeout():
 
 
 func _on_feast_cooldown_timeout():
-	$Level/PigFeast.disabled = false
-
+	$Level/GUI/HBoxContainer/Buttons/PigFeast.disabled = false
 
 func _on_gameover_timer_timeout():
 	game_completed()
@@ -296,12 +297,12 @@ func game_completed():
 	popup_control.get_child(6).fired = true
 	popup_control.get_child(6).show()
 	popup_control.get_child(6).get_child(0).hide()
-
 	
+func _on_to_game_over_1_pressed():
+	# Go to GameOver1 popup
+	popup_control.get_child(6).hide()
 	popup_control.get_child(8).fired = true
 	popup_control.get_child(8).show()
-	
-	
 
 func _on_to_game_over_2_pressed():
 	# Go to GameOver2 popup
@@ -323,7 +324,9 @@ func _on_to_game_over_4_pressed():
 	if game_won != true:
 		popup_control.get_child(11).get_child(2).hide()
 
-
 func _on_new_game_pressed():
 	pause_game()
 	restart()
+
+
+

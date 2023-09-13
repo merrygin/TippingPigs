@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cchob1q6jteq7"]
+[gd_scene load_steps=48 format=3 uid="uid://cchob1q6jteq7"]
 
 [ext_resource type="Script" path="res://Scripts/pig.gd" id="1_wrl6y"]
 [ext_resource type="Texture2D" uid="uid://b8hkkaumaed5a" path="res://assets/SelielTheShaper_Art/Download_Livestock/livestock_pig_base_v01.png" id="1_xq0uv"]
@@ -6,10 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://ckgim8ivf0hnn" path="res://assets/custom/lying pig sleep.png" id="3_gtllg"]
 [ext_resource type="Texture2D" uid="uid://cppypahohm4x6" path="res://assets/custom/lying pig wiggle.png" id="4_sby3v"]
 [ext_resource type="Texture2D" uid="uid://bwprlc6d7lejt" path="res://assets/custom/snoring pig.png" id="5_vcwvn"]
-[ext_resource type="Script" path="res://Scripts/finite_state_machine.gd" id="6_jlq8e"]
-[ext_resource type="Script" path="res://Scripts/walk_state.gd" id="7_i5a5s"]
-[ext_resource type="Script" path="res://Scripts/eat_state.gd" id="9_o5euv"]
-[ext_resource type="Script" path="res://Scripts/idle_state.gd" id="10_w7e4u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqjf0"]
 radius = 5.99999
@@ -229,7 +225,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0k48h")
 }],
-"loop": true,
+"loop": false,
 "name": &"Eat_r",
 "speed": 3.0
 }, {
@@ -408,7 +404,7 @@ shape = SubResource("CapsuleShape2D_eqjf0")
 texture_filter = 1
 position = Vector2(6.77626e-21, 6.77626e-21)
 sprite_frames = SubResource("SpriteFrames_wqbco")
-animation = &"Eat_r"
+animation = &"Eat_l"
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -419,22 +415,3 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_18n86")
 debug_color = Color(0.384314, 0.6, 0.376471, 0.419608)
 metadata/_edit_lock_ = true
-
-[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
-script = ExtResource("6_jlq8e")
-state = NodePath("IdleState")
-
-[node name="WalkState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("7_i5a5s")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
-
-[node name="EatState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("9_o5euv")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
-
-[node name="IdleState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator")]
-script = ExtResource("10_w7e4u")
-actor = NodePath("../..")
-animator = NodePath("../../AnimatedSprite2D")
