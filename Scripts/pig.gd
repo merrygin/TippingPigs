@@ -146,7 +146,7 @@ func update_state():
 			#print("At this tile, {0} underbrush is left".format([available_underbrush]))
 
 			# check if enough underbrush for eating
-			if available_underbrush >= 50:
+			if available_underbrush >= 35:
 				if facing == "right": # if movement towards right
 					animated_sprite.play("Eat_r")
 
@@ -154,7 +154,7 @@ func update_state():
 					animated_sprite.play("Eat_l")
 			
 				# this is eating action
-				var new_underbrush = available_underbrush - 5
+				var new_underbrush = available_underbrush - eat_rate
 				if new_underbrush <= 0:
 					new_underbrush = 0 
 					

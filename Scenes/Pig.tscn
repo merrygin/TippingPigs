@@ -393,6 +393,7 @@ radius = 32.1403
 z_index = 4
 collision_layer = 4
 script = ExtResource("1_wrl6y")
+eat_rate = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

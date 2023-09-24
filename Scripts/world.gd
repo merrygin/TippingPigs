@@ -100,6 +100,7 @@ func restart(): # I THINK it works now, yey
 	game_won = false
 	print("Wir besiedeln eine neue Insel!")
 	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
+	pause_game()
 	
 func _process(delta):
 	# fire first info panel when first desolation appears
@@ -141,13 +142,13 @@ func _process(delta):
 func game_over():
 	# This fires when the game is lost / the island is destroyed
 	pause_game()
+	gameover = true
 	popup_control.get_child(6).fired = true
 	popup_control.get_child(6).show()
 	popup_control.get_child(6).get_child(1).hide()
-	gameover = true
-	
-	popup_control.get_child(8).fired = true
-	popup_control.get_child(8).show()
+
+	#popup_control.get_child(8).fired = true
+	#popup_control.get_child(8).show()
 	
 	# Your highscore is set to 0, because you FAILED to save the island long enough
 	Game.current_highscore = 0 
@@ -213,10 +214,10 @@ func _input(event):
 			_on_pig_feast_pressed()
 		
 	elif event.is_action_pressed("right_click"):
-		
-		for popup in popup_control.get_children():
-			popup.hide()
-		pause_game()
+		if gameover != false:
+			for popup in popup_control.get_children():
+				popup.hide()
+			pause_game()
 		
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
@@ -298,12 +299,11 @@ func game_completed():
 	popup_control.get_child(6).show()
 	popup_control.get_child(6).get_child(0).hide()
 	
-func _on_to_game_over_1_pressed():
-	# Go to GameOver1 popup
+func _on_to_next_go_screen_pressed():
+	# Go to GameOver2 popup
 	popup_control.get_child(6).hide()
-	popup_control.get_child(8).fired = true
 	popup_control.get_child(8).show()
-
+	
 func _on_to_game_over_2_pressed():
 	# Go to GameOver2 popup
 	popup_control.get_child(8).hide()
@@ -325,7 +325,6 @@ func _on_to_game_over_4_pressed():
 		popup_control.get_child(11).get_child(2).hide()
 
 func _on_new_game_pressed():
-	pause_game()
 	restart()
 
 

@@ -5,7 +5,6 @@ extends Node2D
 func _on_spielen_pressed():
 	get_tree().change_scene_to_file("res://Scenes/world.tscn")
 
-
 func _on_beenden_pressed():
 	get_tree().quit()
 
@@ -19,3 +18,5 @@ func scenic_pigs_spawn():
 	pigTemp.position = rand_xy
 	scenic_pigs.add_child(pigTemp)
 	
+func _on_credits_pressed():
+	get_tree().change_scene_to_file("res://Scenes/credits.tscn")
