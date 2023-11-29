@@ -1,6 +1,7 @@
 extends Node2D
 
 var gameover = false
+var game_won = false
 
 @onready var pigs_node = $Level/Pigs
 @onready var villagers_node = $Level/Villagers
@@ -89,16 +90,18 @@ func restart(): # I THINK it works now, yey
 	
 	get_tree().reload_current_scene()
 	Game.global_threshold = 0
+	Game.wood = 0
 	Game.ticks = 0 # reset ticks
 	Game.zufriedenheit = 0
 	if Game.alltime_highscore < Game.current_highscore:
 		Game.alltime_highscore = Game.current_highscore
 	Game.current_highscore = 0
 	gameover = false
+	game_won = false
 	print("Wir besiedeln eine neue Insel!")
 	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
 	pause_game()
-
+	
 func _process(delta):
 	# fire first info panel when first desolation appears
 	if Game.deso_amount == 1 and Game.ticks > 1  and popup_control.get_child(0).fired == false:
@@ -134,20 +137,21 @@ func _process(delta):
 
 	if Game.villager_count <= 0 and Game.ticks > 1:
 		game_over()
-		
+	
+	
 func game_over():
+	# This fires when the game is lost / the island is destroyed
 	pause_game()
+	gameover = true
 	popup_control.get_child(6).fired = true
 	popup_control.get_child(6).show()
-	gameover = true
+	popup_control.get_child(6).get_child(1).hide()
+
+	#popup_control.get_child(8).fired = true
+	#popup_control.get_child(8).show()
 	
-	# check threshold state and deduct points if necessary
-	if Game.threshold_level == "yellow":
-		Game.current_highscore = int(Game.current_highscore * 0.67)
-	elif Game.threshold_level == "red":
-		Game.current_highscore = int(Game.current_highscore * 0.34)
-	elif Game.threshold_level == "black":
-		Game.current_highscore = int(Game.current_highscore * 0.1)
+	# Your highscore is set to 0, because you FAILED to save the island long enough
+	Game.current_highscore = 0 
 	
 func spawn_villager(amount):
 	for x in range(0, amount):
@@ -157,6 +161,7 @@ func spawn_villager(amount):
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		#var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		villTemp.position = rand_xy
+		villTemp.velocity = Vector2.ZERO
 		# important to put new pig as child on Pigs 2Dnode to make sure the
 		# node paths are working!
 		# TODO: rewrite this to use signals, so positions become irrelevant
@@ -166,10 +171,9 @@ func spawn_villager(amount):
 func spawn_pigs(amount):
 	for x in range(0, amount):
 		var pigTemp = pig.instantiate()
-		#var rand_pos = Game.legal_tiles[randi() % Game.legal_tiles.size()]
-		#rand_pos = island_map.local_to_map(rand_pos)
 		var rand_xy = Vector2i(randi_range(300,400), randi_range(200,400))
 		pigTemp.position = rand_xy
+		
 		# important to put new pig as child on Pigs 2Dnode to make sure the
 		# node paths are working!
 		# TODO: rewrite this to use signals, so positions become irrelevant
@@ -177,10 +181,11 @@ func spawn_pigs(amount):
 		pigTemp.add_to_group("pigs_group")
 
 func despawn_pigs(amount: int):
-	var all_pigs = get_tree().get_nodes_in_group("pigs_group")
-	for x in range(0, amount):
-		var pig_to_migrate = all_pigs.pop_front()
-		pig_to_migrate.queue_free()
+	if Game.pigHerd > 0:
+		var all_pigs = get_tree().get_nodes_in_group("pigs_group")
+		for x in range(0, amount):
+			var pig_to_migrate = all_pigs.pop_front()
+			pig_to_migrate.queue_free()
 
 	
 # spawn one pig on random position
@@ -205,13 +210,14 @@ func _input(event):
 		despawn_pigs(1)
 	
 	elif event.is_action_pressed("feast_pigs"):
-		_on_pig_feast_pressed()
+		if $Level/GUI/HBoxContainer/Buttons/PigFeast.disabled == false:
+			_on_pig_feast_pressed()
 		
 	elif event.is_action_pressed("right_click"):
-		
-		for popup in popup_control.get_children():
-			popup.hide()
-		pause_game()
+		if gameover != false:
+			for popup in popup_control.get_children():
+				popup.hide()
+			pause_game()
 		
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
@@ -231,25 +237,22 @@ func pause_game():
 func _on_pig_feast_pressed():
 	var to_cull = int(len(get_tree().get_nodes_in_group("pigs_group")) / 2)
 	despawn_pigs(to_cull)
-	$Level/PigFeast/feast_cooldown.start()
-	$Level/PigFeast.disabled = true
-	
-func hover_tile_info():
-	# here I'd like to build a small little function to display the tile
-	# data that Im hovering over/click, to check sanity of pig behavior/cell changes
-	pass
-
+	$Level/GUI/HBoxContainer/Buttons/PigFeast/feast_cooldown.start()
+	$Level/GUI/HBoxContainer/Buttons/PigFeast.disabled = true
 
 func _on_button_pressed():
+	# Tutorial "Weiter..." Button
 	#print("click!")
 	popup_control.get_child(2).hide()
 	popup_control.get_child(3).fired = true
 	popup_control.get_child(3).show()
 
 
-func _on_button_start_pressed():
-	print("click-ity!")
+func _on_start_button_pressed():
 	popup_control.get_child(3).hide()
+	pause_game()
+
+func _on_button_start_pressed():
 	pause_game()
 
 
@@ -259,11 +262,8 @@ func _on_pig_kill_some_pressed():
 
 func _on_lvl_timer_timeout():
 	# count healthy pigs, spawn 1 new pig for each 2 healthy pigs
-	var healthy_pigs = 0
-	for pig in get_tree().get_nodes_in_group("pigs_group"):
-		if pig.health >= 50:
-			healthy_pigs += 1
-	var reproduce_pigs = int(healthy_pigs / 2)
+	var reproduce_pigs = get_tree().get_nodes_in_group("pigs_group").size()
+	reproduce_pigs = int(reproduce_pigs / 2)
 	spawn_pigs(reproduce_pigs)
 	
 	# adjust the score - replace highscore if higher
@@ -275,8 +275,57 @@ func _on_lvl_timer_timeout():
 
 
 func _on_feast_cooldown_timeout():
-	$Level/PigFeast.disabled = false
-
+	$Level/GUI/HBoxContainer/Buttons/PigFeast.disabled = false
 
 func _on_gameover_timer_timeout():
-	game_over()
+	game_completed()
+
+func game_completed():
+	# This gets used when the game is completed successfully -> only then the current highscore counts!
+	pause_game()
+	gameover = true
+	game_won = true
+	
+	# check threshold state and deduct points if necessary
+	if Game.threshold_level == "yellow":
+		Game.current_highscore = int(Game.current_highscore * 0.67)
+	elif Game.threshold_level == "red":
+		Game.current_highscore = int(Game.current_highscore * 0.34)
+	elif Game.threshold_level == "black":
+		Game.current_highscore = int(Game.current_highscore * 0.1)
+
+	
+	popup_control.get_child(6).fired = true
+	popup_control.get_child(6).show()
+	popup_control.get_child(6).get_child(0).hide()
+	
+func _on_to_next_go_screen_pressed():
+	# Go to GameOver2 popup
+	popup_control.get_child(6).hide()
+	popup_control.get_child(8).show()
+	
+func _on_to_game_over_2_pressed():
+	# Go to GameOver2 popup
+	popup_control.get_child(8).hide()
+	popup_control.get_child(9).fired = true
+	popup_control.get_child(9).show()
+
+func _on_to_game_over_3_pressed():
+	# Go to GameOver3 popup
+	popup_control.get_child(9).hide()
+	popup_control.get_child(10).fired = true
+	popup_control.get_child(10).show()
+
+func _on_to_game_over_4_pressed():
+	# Go to GameOver4 popup
+	popup_control.get_child(10).hide()
+	popup_control.get_child(11).fired = true
+	popup_control.get_child(11).show()
+	if game_won != true:
+		popup_control.get_child(11).get_child(2).hide()
+
+func _on_new_game_pressed():
+	restart()
+
+
+

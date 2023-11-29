@@ -1,3 +1,4 @@
+class_name IslandMap
 extends TileMap
 
 # doing this all the time is very inefficient performance wise
@@ -77,3 +78,7 @@ func count_tile_types():
 	Game.grass_percent = snapped((float(Game.grass_amount) / float(Game.total_amount) * 100), 0.1)
 	Game.deso_percent = snapped((float(Game.deso_amount) / float(Game.total_amount) * 100), 0.1)
 	
+
+# Refresh legal tiles
+func _on_timer_timeout():
+	get_legal_tiles()
