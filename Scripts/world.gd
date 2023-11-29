@@ -103,6 +103,7 @@ func restart(): # I THINK it works now, yey
 	pause_game()
 	
 func _process(delta):
+	# popup trigger -> should be handled with signals instead in the future
 	# fire first info panel when first desolation appears
 	if Game.deso_amount == 1 and Game.ticks > 1  and popup_control.get_child(0).fired == false:
 		pause_game()

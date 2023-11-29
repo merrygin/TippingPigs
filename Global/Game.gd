@@ -1,7 +1,5 @@
 extends Node
 
-
-
 var ticks = 0
 
 var pigs
@@ -41,7 +39,7 @@ var wood : int = 0
 var zufriedenheit : int = 0
 var current_highscore : int = 0
 var alltime_highscore : int = 0
-var threshold_level = "green"
+var threshold_level = "green" 
 
 var tile_list = []
 var legal_tiles = []
