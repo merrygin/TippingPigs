@@ -12,7 +12,7 @@ config_version=5
 
 config/name="TippingPoints"
 run/main_scene="res://Scenes/main.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,7 +23,7 @@ Game="*res://Global/Game.gd"
 
 window/size/viewport_width=1433
 window/size/viewport_height=1433
-window/size/mode=2
+window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
@@ -35,6 +35,11 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/graph_2d/plugin.cfg")
+
+[gui]
+
+theme/custom_font="res://assets/Font/pixelfont.tres"
+theme/default_font_antialiasing=0
 
 [input]
 
@@ -86,6 +91,6 @@ feast_pigs={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
+textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="mobile"
 viewport/transparent_background=true
