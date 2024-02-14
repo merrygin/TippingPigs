@@ -14,7 +14,6 @@ func _process(delta):
 	# the plusses and minuses that are briefly floating from the counter
 	text = (
 		"Zufriedenheit-Score: " + str(Game.zufriedenheit) +
-		" | " + "Dein Highscore: " + str(Game.current_highscore) + " (Gesamthighscore: " +
-	 	str(Game.alltime_highscore) + ")"
+		" | " + "Gesamthighscore: " + str(Game.alltime_highscore)
 	)
 

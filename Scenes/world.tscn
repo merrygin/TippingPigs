@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cb24xk2xvemx5"]
+[gd_scene load_steps=36 format=3 uid="uid://cb24xk2xvemx5"]
 
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_e2abj"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2i655"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dtubqurfqjh18" path="res://assets/Placeholder_Art/Sunny-land-assets-files/PNG/environment/layers/back.png" id="12_yfgav"]
 [ext_resource type="Texture2D" uid="uid://ebt0dymf0i10" path="res://assets/custom/overworld_tileset_palms-V3 with grass.png" id="13_ao4nn"]
 [ext_resource type="Script" path="res://Scripts/gameover_timer.gd" id="13_wngrg"]
+[ext_resource type="PackedScene" uid="uid://dogqtpccyue23" path="res://Scenes/record_highscore.tscn" id="20_odtjm"]
 
 [sub_resource type="Theme" id="Theme_gy1xv"]
 Button/styles/hover = ExtResource("2_x8r8g")
@@ -3274,7 +3275,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="gameover_timer" type="Timer" parent="Level"]
-wait_time = 120.0
+wait_time = 10.0
 autostart = true
 script = ExtResource("13_wngrg")
 
@@ -3392,6 +3393,7 @@ theme_override_fonts/font = ExtResource("3_8j0yx")
 text = "Weiter! (E)"
 
 [node name="tutorialPopup1" type="Panel" parent="infoPopUps/popupControl"]
+visible = false
 z_index = 9
 layout_direction = 1
 layout_mode = 1
@@ -3606,6 +3608,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="GameOverLabel" type="Label" parent="infoPopUps/popupControl/GameOver"]
+visible = false
 z_index = 11
 layout_mode = 1
 anchors_preset = 15
@@ -3928,6 +3931,14 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("3_8j0yx")
 text = "Score speichern"
 
+[node name="recordingHighscore" parent="infoPopUps/popupControl" instance=ExtResource("20_odtjm")]
+z_index = 21
+layout_mode = 0
+offset_left = 65.0
+offset_top = 192.0
+offset_right = 432.0
+offset_bottom = 649.0
+
 [node name="GrassyMountainsFc" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(468, 132)
@@ -3951,3 +3962,4 @@ position = Vector2(468, 132)
 [connection signal="pressed" from="infoPopUps/popupControl/GameOver2/ToGameOver3" to="." method="_on_to_game_over_3_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/GameOver3/ToGameOver4" to="." method="_on_to_game_over_4_pressed"]
 [connection signal="pressed" from="infoPopUps/popupControl/GameOver4/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="infoPopUps/popupControl/GameOver4/RecordHighscore" to="." method="_on_record_highscore_pressed"]

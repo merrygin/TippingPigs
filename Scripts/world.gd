@@ -327,5 +327,8 @@ func _on_to_game_over_4_pressed():
 func _on_new_game_pressed():
 	restart()
 
-
-
+func _on_record_highscore_pressed():
+	# Go to GameOver4 popup
+	#popup_control.get_child(10).hide()
+	popup_control.get_child(12).fired = true
+	popup_control.get_child(12).show()

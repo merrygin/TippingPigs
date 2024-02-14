@@ -23,7 +23,7 @@ Game="*res://Global/Game.gd"
 
 window/size/viewport_width=1433
 window/size/viewport_height=1433
-window/size/mode=3
+window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

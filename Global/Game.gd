@@ -1,6 +1,8 @@
 extends Node
 
-
+# recorded top 10 highscores to be displayed in main menue (are recorded each time a player 
+# successfully finishes the game)
+var highscores = {} 
 
 var ticks = 0
 
@@ -39,8 +41,8 @@ var surround_modifier = 0
 
 var wood : int = 0
 var zufriedenheit : int = 0
-var current_highscore : int = 0
-var alltime_highscore : int = 0
+var current_highscore = 0
+var alltime_highscore = {}
 var threshold_level = "green"
 
 var tile_list = []
@@ -54,11 +56,24 @@ func _ready():
 	pigHerd = pigs.size()
 	villagers = get_tree().get_nodes_in_group("villagers_group")
 	villager_count = villagers.size()
+	check_highscores()
 	
 func _process(delta):
 	pass
- 
-
+	
+func check_highscores():
+	# check if highscore storage already initialized, if not, make it so
+	print("CHECK IN PROG")
+	if FileAccess.file_exists("res://highscores.data") == false:
+		print("FALSSEEE")
+		var file = FileAccess.open("res://highscores.data", FileAccess.WRITE)
+		var score_record = {"BradleyPowerPig":1000}
+		file.store_var(score_record)
+		file.close()
+		if FileAccess.file_exists("res://highscores.data") == true:
+			print("NOW TRUUUU")
+			
+			
 # tile types (tt), default properties; for reference
 var tt_GRASS = {
 		"type": "grass", 
