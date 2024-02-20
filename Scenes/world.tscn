@@ -3275,7 +3275,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="gameover_timer" type="Timer" parent="Level"]
-wait_time = 10.0
+wait_time = 120.0
 autostart = true
 script = ExtResource("13_wngrg")
 
@@ -3608,7 +3608,6 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="GameOverLabel" type="Label" parent="infoPopUps/popupControl/GameOver"]
-visible = false
 z_index = 11
 layout_mode = 1
 anchors_preset = 15

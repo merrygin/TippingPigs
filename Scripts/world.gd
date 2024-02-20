@@ -93,7 +93,7 @@ func restart(): # I THINK it works now, yey
 	Game.wood = 0
 	Game.ticks = 0 # reset ticks
 	Game.zufriedenheit = 0
-	if Game.alltime_highscore < Game.current_highscore:
+	if Game.alltime_highscore.values < Game.current_highscore:
 		Game.alltime_highscore = Game.current_highscore
 	Game.current_highscore = 0
 	gameover = false
@@ -138,6 +138,8 @@ func _process(delta):
 	if Game.villager_count <= 0 and Game.ticks > 1:
 		game_over()
 	
+	if Game.current_highscore < 0 and Game.ticks > 1:
+		game_over()
 	
 func game_over():
 	# This fires when the game is lost / the island is destroyed
